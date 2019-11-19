@@ -76,8 +76,8 @@ class AdminLayout extends Component {
       <Layout>
         <Header className="header">
           <div className="brand">
-            <span className="brand-name">fully</span>
-            <span className="slogan">easily develop a full stack website  </span>
+            <span className="brand-name">得到-书香</span>
+            <span className="slogan"></span>
           </div>
 
           <span className="welcome">欢迎您：</span>
