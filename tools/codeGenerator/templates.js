@@ -160,12 +160,6 @@ class ${upperFirstLetter(form)}Page extends PageBase {
               新增
             </Button>
             <Button
-              onClick={() => ${form}.toggleFormModal('copyAdd')}
-              disabled={this.disableButton('add', selectedKeys.length !== 1)}
-            >
-              复制并新增
-            </Button>
-            <Button
               onClick={() => this.props.${form}.toggleFormModal('edit')}
               disabled={this.disableButton('edit', selectedKeys.length !== 1)}
             >
@@ -176,12 +170,6 @@ class ${upperFirstLetter(form)}Page extends PageBase {
               disabled={this.disableButton('delete', selectedKeys.length === 0)}
             >
               删除
-            </Button>
-            <Button
-              onClick={() => this.props.${form}.toggleGrantModal()}
-              disabled={this.disableButton('grant', selectedKeys.length !== 1)}
-            >
-              分配角色
             </Button>
           </ButtonGroup>
         </div>
