@@ -154,20 +154,19 @@ class ${upperFirstLetter(form)}Page extends PageBase {
           <ButtonGroup className="buttons">
             <Button
               onClick={() => this.props.${form}.toggleFormModal('add')}
-              disabled={this.disableButton('add')}
               type={'primary'}
             >
               新增
             </Button>
             <Button
               onClick={() => this.props.${form}.toggleFormModal('edit')}
-              disabled={this.disableButton('edit', selectedKeys.length !== 1)}
+              disabled={selectedKeys.length !== 1}
             >
               编辑
             </Button>
             <Button
               onClick={() => this.props.${form}.deleteData()}
-              disabled={this.disableButton('delete', selectedKeys.length === 0)}
+              disabled={selectedKeys.length === 0}
             >
               删除
             </Button>

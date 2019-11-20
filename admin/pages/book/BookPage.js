@@ -33,7 +33,7 @@ class BookPage extends PageBase {
     const {dataList, operateType, showFormModal, selectedKeys, rowSelection, firstSelected , pagination} = book;
     return (
       <div className="base-layout book-page">
-        <Title title='book管理'/>
+        <Title title='书籍管理'/>
         <div className="operate-bar">
           <Input.Search
             className={'search'}
@@ -44,7 +44,6 @@ class BookPage extends PageBase {
           <ButtonGroup className="buttons">
             <Button
               onClick={() => this.props.book.toggleFormModal('add')}
-              disabled={this.disableButton('add')}
               type={'primary'}
             >
               新增

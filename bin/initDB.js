@@ -26,7 +26,7 @@ async function initialDatabaseStructure() {
 async function initialMenu() {
   const menuList = [
 
-    {name: 'book', icon: 'book', path: '/admin/book', enable: true, parentPath: '',type:1},
+    {name: '书籍管理', icon: 'book', path: '/admin/book', enable: true, parentPath: '',type:1},
     {name: '新增', icon: 'plus', path: '/admin/book/add', enable: true, parentPath: '/admin/book', type: 2},
     {name: '编辑', icon: 'edit', path: '/admin/book/edit', enable: true, parentPath: '/admin/book', type: 2},
     {name: '删除', icon: 'delete', path: '/admin/book/delete', enable: true, parentPath: '/admin/book', type: 2},
