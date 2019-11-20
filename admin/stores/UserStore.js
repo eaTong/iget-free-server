@@ -26,13 +26,4 @@ export default class UserStore extends BaseStore {
   @action toggleGrantModal() {
     this.showGrantModal = !this.showGrantModal;
   }
-
-  @action
-  async grantRole(opts) {
-    await ajax({data: {...opts, userId: this.firstSelected.id}, url: '/api/user/grant'});
-    this.selectedKeys = [];
-    this.toggleGrantModal();
-    message.success('授权成功');
-    await this.getDataList();
-  }
 }

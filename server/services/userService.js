@@ -5,7 +5,6 @@ const md5 = require('crypto-js/md5');
 const {Op} = require('sequelize');
 const {LogicError} = require('../framework/errors');
 const User = require('../models/User');
-const Role = require('../models/Role');
 
 module.exports = {
   addUser: async (user) => {
@@ -28,12 +27,7 @@ module.exports = {
     return await User.update({enable: false}, {where: {id: {[Op.in]: ids}}});
   },
   getUsers: async () => {
-    return await User.findAll({attributes: ['id', 'name', 'account'], where: {enable: true}, include: [{model: Role}]});
-  },
-  grantRole: async (data) => {
-    const user = await User.findById(data.userId);
-    user.setRoles(data.roles);
-    return await user.save();
+    return await User.findAll({attributes: ['id', 'name', 'account'], where: {enable: true}});
   },
   changePassword: async ({password, originPassword, account}) => {
     const user = await User.findOne({

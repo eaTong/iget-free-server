@@ -17,9 +17,6 @@ module.exports = {
   getUsers: async (ctx) => {
     return await userService.getUsers(ctx.request.body);
   },
-  grantRole: async (ctx) => {
-    return await userService.grantRole(ctx.request.body);
-  },
   changePassword: async (ctx) => {
     const formData = ctx.request.body;
     formData.account = ctx.session.loginUser.account;

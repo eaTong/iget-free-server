@@ -8,7 +8,6 @@ import {Button, message, Input, Pagination} from 'antd';
 import Reactable from '@eatong/reactable';
 import UserModal from "./UserModal";
 import {inject, observer} from "mobx-react";
-import GrantRoleModal from "~/pages/user/GrantRoleModal";
 import Title from "~/components/Title";
 import PageBase from "~/components/PageBase";
 
@@ -16,7 +15,6 @@ const ButtonGroup = Button.Group;
 const columns = [
   {title: '名称', dataIndex: 'name', key: 'name'},
   {title: '账号', dataIndex: 'account'},
-  {title: '角色', dataIndex: 'roles', render: (val) => val.map(role => role.name).join('、')}
 ];
 
 @inject('user', 'app') @observer
@@ -52,12 +50,6 @@ class UserPage extends PageBase {
             >
               删除
             </Button>
-            <Button
-              onClick={() => user.toggleGrantModal()}
-              disabled={this.disableButton('grant', selectedKeys.length !== 1)}
-            >
-              分配角色
-            </Button>
           </ButtonGroup>
         </div>
         <Reactable
@@ -76,13 +68,6 @@ class UserPage extends PageBase {
             onCancel={() => user.toggleFormModal()}
             onOk={(data) => user.onSaveData(data)}
             operateType={operateType}
-            formData={firstSelected}
-          />
-        )}
-        {showGrantModal && (
-          <GrantRoleModal
-            onCancel={() => user.toggleGrantModal()}
-            onOk={(data) => user.grantRole(data)}
             formData={firstSelected}
           />
         )}

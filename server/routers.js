@@ -8,7 +8,6 @@ const {ArgMissError, LogicError} = require('./framework/errors');
 
 const fileApi = require('./apis/fileApi');
 const userApi = require('./apis/userApi');
-const roleApi = require('./apis/roleApi');
 const menuApi = require('./apis/menuApi');
 //UPDATE_TAG:importApi
 
@@ -23,20 +22,11 @@ router.post('/api/file/upload', fileApi.uploadFile);
 router.post('/api/menu/get', menuApi.getMenus);
 router.post('/api/menu/authorised', menuApi.getAuthorisedMenu);
 
-router.post('/api/role/add', insertLog('add'), checkArguments(['name']), roleApi.addRole);
-router.post('/api/role/get', roleApi.getRoles);
-router.post('/api/role/update', insertLog('update'), checkArguments(['id', 'name']), roleApi.updateRoles);
-router.post('/api/role/delete', insertLog('delete'), checkArguments(['ids']), roleApi.deleteRoles);
-router.post('/api/role/grant', insertLog('grant'), checkArguments(['roleId', 'menus']), roleApi.grantMenus);
-
 router.post('/api/user/add', insertLog('add'), checkArguments(['account', 'name']), userApi.addUser);
 router.post('/api/user/get', userApi.getUsers);
 router.post('/api/user/update', insertLog('update'), checkArguments(['id', 'account', 'name']), userApi.updateUsers);
 router.post('/api/user/delete', insertLog('delete'), checkArguments(['ids']), userApi.deleteUsers);
-router.post('/api/user/logout', insertLog('login'), userApi.logout);
-router.post('/api/user/grant', insertLog('grant'), checkArguments(['userId', 'roles']), userApi.grantRole);
 router.post('/api/user/changePassword', insertLog('changePassword'), checkArguments(['password', 'originPassword']), userApi.changePassword);
-
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {

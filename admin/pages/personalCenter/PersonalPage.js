@@ -18,15 +18,12 @@ const columns = [
 @inject('app') @observer
 class PersonalPage extends PageBase {
   async componentDidMount() {
-    await this.props.role.getDataList();
   }
 
   render() {
     return (
       <div className="base-layout">
         <Title title='个人中心'/>
-
-
       </div>
     );
   }
