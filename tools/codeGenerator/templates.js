@@ -28,19 +28,24 @@ const ${form}Service = require('../services/${form}Service');
 
 module.exports = {
   add${upperFirstLetter(form)}: async (ctx) => {
-    return await ${form}Service.add${upperFirstLetter(form)}(ctx.request.body);
+    const loginUser = ctx.session.loginUser;
+    return await ${form}Service.add${upperFirstLetter(form)}(ctx.request.body,loginUser);
   },
   update${upperFirstLetter(form)}s: async (ctx) => {
-    return await ${form}Service.update${upperFirstLetter(form)}s(ctx.request.body);
+    const loginUser = ctx.session.loginUser;
+    return await ${form}Service.update${upperFirstLetter(form)}s(ctx.request.body,loginUser);
   },
   delete${upperFirstLetter(form)}s: async (ctx) => {
-    return await ${form}Service.delete${upperFirstLetter(form)}s(ctx.request.body.ids);
+    const loginUser = ctx.session.loginUser;
+    return await ${form}Service.delete${upperFirstLetter(form)}s(ctx.request.body.ids,loginUser);
   },
   get${upperFirstLetter(form)}s: async (ctx) => {
-    return await ${form}Service.get${upperFirstLetter(form)}s(ctx.request.body);
+    const loginUser = ctx.session.loginUser;
+    return await ${form}Service.get${upperFirstLetter(form)}s(ctx.request.body,loginUser);
   },
   get${upperFirstLetter(form)}Detail: async (ctx) => {
-    return await ${form}Service.get${upperFirstLetter(form)}Detail(ctx.request.body);
+    const loginUser = ctx.session.loginUser;
+    return await ${form}Service.get${upperFirstLetter(form)}Detail(ctx.request.body,loginUser);
   }
 };
   `;
@@ -54,22 +59,21 @@ const {LogicError} = require('../framework/errors');
 const ${upperFirstLetter(form)} = require('../models/${upperFirstLetter(form)}');
 
 module.exports = {
-
-  add${upperFirstLetter(form)}: async (${form}) => {
-    ${form}.logo = JSON.stringify(${form}.logo || []);
+  add${upperFirstLetter(form)}: async (${form},loginUser) => {
     ${form}.enable = true;
+    
     return await ${upperFirstLetter(form)}.create(${form});
   },
 
-  update${upperFirstLetter(form)}s: async (${form}) => {
+  update${upperFirstLetter(form)}s: async (${form},loginUser) => {
     return await ${upperFirstLetter(form)}.update(${form}, {where: {id: ${form}.id}})
   },
 
-  delete${upperFirstLetter(form)}s: async (ids) => {
+  delete${upperFirstLetter(form)}s: async (ids,loginUser) => {
     return await ${upperFirstLetter(form)}.update({enable: false}, {where: {id: {[Op.in]: ids}}});
   },
 
-  get${upperFirstLetter(form)}s: async ({pageIndex = 0, pageSize = 20, keywords = ''}) => {
+  get${upperFirstLetter(form)}s: async ({pageIndex = 0, pageSize = 20, keywords = ''},loginUser) => {
     const option = {where: {enable: true, name: {[Op.like]: \`\%\${keywords}%\`}}}; 
     const {dataValues: {total}} = await ${upperFirstLetter(form)}.findOne({
       ...option,
@@ -79,7 +83,7 @@ module.exports = {
     return {total, list}
   },
 
-  get${upperFirstLetter(form)}Detail: async ({id}) => {
+  get${upperFirstLetter(form)}Detail: async ({id},loginUser) => {
     return await ${upperFirstLetter(form)}.findOne({where: {id}});
   }
 }; 
