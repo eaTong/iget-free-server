@@ -7,6 +7,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Modal, Form, Input, message, DatePicker, InputNumber} from 'antd';
 import {GLOBAL_LAYOUT} from '~/utils/constants';
+import ImageUploader from "../../components/ImageUploader";
 
 const FormItem = Form.Item;
 
@@ -46,6 +47,16 @@ class BookFormModal extends Component {
               <Input/>
             )}
           </FormItem>
+          <FormItem {...GLOBAL_LAYOUT} label="作者" >
+            {getFieldDecorator('author')(
+              <Input/>
+            )}
+          </FormItem>
+          <FormItem {...GLOBAL_LAYOUT} label="封面图片" >
+            {getFieldDecorator('coverImage')(
+              <ImageUploader maxCount={1}/>
+            )}
+          </FormItem>
           <FormItem {...GLOBAL_LAYOUT} label="字数" >
             {getFieldDecorator('letterCount', {
               rules: [{required: true, message: '请填写字数!',}],
@@ -54,7 +65,7 @@ class BookFormModal extends Component {
             )}
           </FormItem>
           <FormItem {...GLOBAL_LAYOUT} label="出版日期" >
-            {getFieldDecorator('publishDate')(
+            {getFieldDecorator('publishTime')(
               <DatePicker/>
             )}
           </FormItem>
