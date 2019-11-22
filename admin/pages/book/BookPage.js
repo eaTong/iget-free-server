@@ -13,39 +13,29 @@ import PageBase from "~/components/PageBase";
 import DataGrid from "../../components/DataGrid";
 import DataRow from "../../components/DataRow";
 import moment from "moment";
+import {bookMarkStatus} from "../../../bothSide/enums";
 
 const ButtonGroup = Button.Group;
-const columns = [
-  {title: '书名', key: 'name'},
-  {title: '副标题', key: 'subTitle'},
-  {title: '作者', key: 'author'},
-  {title: '总字数', key: 'letterCount'},
-  {title: '出版方', key: 'publisher'},
-  {title: '出版日期', key: 'publishTime'},
-];
 
-@inject('book', 'app') @observer
+@inject('book', 'app', 'bookMark') @observer
 class BookPage extends PageBase {
   async componentDidMount() {
     await this.props.book.getDataList();
   }
 
   renderBooks() {
-    const {book} = this.props;
+    const {book, bookMark} = this.props;
     return book.dataList.map(bookItem => (
       <Card
         className={'book-item'}
         key={bookItem.id}
         cover={(<div className={`cover-image ${bookItem.coverImage ? '' : 'empty'}`}
                      style={{backgroundImage: `url(${bookItem.coverImage})`}}/>)}
-        actions={[
-          <span>想读</span>,
-          <span>在读</span>,
-          <span>已读</span>
-        ]}
+        actions={bookMarkStatus.slice(1, bookMarkStatus.length).map((status, index) => (
+          <span key={status} onClick={() => bookMark.markBook(bookItem.id, {status: index + 1})}>{status}</span>
+        ))}
         title={bookItem.name}
       >
-        <div className={'sub-title'}>{bookItem.subTitle}</div>
         <DataGrid>
           <DataRow label={'作者'}>{bookItem.author}</DataRow>
           <DataRow label={'出版日期'}>{bookItem.publishTime && moment(bookItem.publishTime).format('YYYY-MM-DD')}</DataRow>

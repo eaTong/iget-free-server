@@ -16,6 +16,22 @@ module.exports = {
     bookMark.userId = loginUser.id;
     return await BookMark.create(bookMark);
   },
+  markBook: async (data, loginUser) => {
+    const mark = await BookMark.findOne({where: {bookId: data.bookId, userId: loginUser.id}});
+    if (mark) {
+      mark.status = data.status;
+      mark.finishTime = data.finishTime;
+      await mark.save();
+      return {isNew: false};
+    }
+    const bookMark = {
+      enable: true,
+      userId: loginUser.id,
+      ...data,
+    };
+    await BookMark.create(bookMark);
+    return {isNew: true};
+  },
 
   updateBookMarks: async (bookMark, loginUser) => {
     return await BookMark.update(bookMark, {where: {id: bookMark.id, userId: loginUser.id}})

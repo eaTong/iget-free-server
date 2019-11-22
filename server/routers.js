@@ -34,13 +34,14 @@ router.post('/api/book/add', insertLog('add'), checkArguments(['name']), bookApi
 router.post('/api/book/get', bookApi.getBooks);
 router.post('/api/book/update', insertLog('update'), checkArguments(['id', 'name']), bookApi.updateBooks);
 router.post('/api/book/delete', insertLog('delete'), checkArguments(['ids']), bookApi.deleteBooks);
-router.post('/api/book/detail',  checkArguments(['id']), bookApi.getBookDetail);
+router.post('/api/book/detail', checkArguments(['id']), bookApi.getBookDetail);
 
 router.post('/api/bookMark/add', insertLog('add'), checkArguments(['bookId']), bookMarkApi.addBookMark);
 router.post('/api/bookMark/get', bookMarkApi.getBookMarks);
+router.post('/api/bookMark/mark', insertLog('mark'), checkArguments(['bookId']), bookMarkApi.markBook);
 router.post('/api/bookMark/update', insertLog('update'), checkArguments(['id', 'bookId']), bookMarkApi.updateBookMarks);
 router.post('/api/bookMark/delete', insertLog('delete'), checkArguments(['ids']), bookMarkApi.deleteBookMarks);
-router.post('/api/bookMark/detail',  checkArguments(['id']), bookMarkApi.getBookMarkDetail);
+router.post('/api/bookMark/detail', checkArguments(['id']), bookMarkApi.getBookMarkDetail);
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {

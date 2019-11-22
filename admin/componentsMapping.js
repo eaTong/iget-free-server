@@ -5,7 +5,7 @@ import BookMarkPage from './pages/bookMark/BookMarkPage';
 //UPDATE_TAG:importPage
 
 const componentsMapping = {
-  '/admin/index': AdminIndexPage,
+  '/admin': AdminIndexPage,
   '/admin/user': UserPage,
   '/admin/book': BookPage,
   '/admin/bookMark': BookMarkPage,

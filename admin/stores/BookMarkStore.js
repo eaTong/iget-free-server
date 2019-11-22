@@ -1,4 +1,3 @@
-
 /**
  * Created by eaTong on 2019-11-21 .
  * Description: auto generated in  2019-11-21
@@ -6,7 +5,14 @@
 
 import {observable, action} from 'mobx';
 import ajax from "~/utils/ajax";
+import {message, Modal, Form, DatePicker} from 'antd';
 import BaseStore from '~/stores/BaseStore'
+import {GLOBAL_LAYOUT} from "../utils/constants";
+import moment from "moment";
+import React from "react";
+import {bookMarkStatus} from "../../bothSide/enums";
+
+const FormItem = Form.Item;
 
 export default class BookMarkStore extends BaseStore {
   listApi = '/api/bookMark/get';
@@ -14,11 +20,36 @@ export default class BookMarkStore extends BaseStore {
   updateApi = '/api/bookMark/update';
   deleteApi = '/api/bookMark/delete';
   detailApi = '/api/bookMark/detail';
-  
+
   @action
   async searchData(keywords) {
     this.queryOption = {keywords};
     this.pageIndex = 0;
     await this.getDataList();
+  }
+
+  @action
+  async markBook(bookId, {status}) {
+    let finishTime;
+    if (status === 3) {
+      finishTime = moment();
+      Modal.confirm({
+        title: '请确认读完日期',
+        content: (
+          <Form>
+            <FormItem label={'读完日期'} {...GLOBAL_LAYOUT}>
+              <DatePicker defaultValue={finishTime} onChange={(val => finishTime = val)}/>
+            </FormItem>
+          </Form>
+        ),
+        async onOk() {
+          const {isNew} = await ajax({url: '/api/bookMark/mark', data: {bookId, finishTime, status}});
+          message.success(isNew ? `已加入到${bookMarkStatus[status]}清单` : `更新状态为：${bookMarkStatus[status]}`);
+        }
+      })
+    } else {
+      const {isNew} = await ajax({url: '/api/bookMark/mark', data: {bookId, status}});
+      message.success(isNew ? `已加入到${bookMarkStatus[status]}清单` : `更新状态为：${bookMarkStatus[status]}`);
+    }
   }
 }

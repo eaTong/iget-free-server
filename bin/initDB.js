@@ -26,8 +26,8 @@ async function initialDatabaseStructure() {
 
 async function initialMenu() {
   const menuList = [
-    {name: '书籍管理', icon: 'book', path: '/admin/book', enable: true, parentPath: '', type: 1},
-    {name: '我的读书', icon: 'file', path: '/admin/bookMark', enable: true, parentPath: '', type: 1},
+    {name: '书海', icon: 'book', path: '/admin/book', enable: true, parentPath: '', type: 1},
+    {name: '藏书阁', icon: 'file', path: '/admin/bookMark', enable: true, parentPath: '', type: 1},
 //UPDATE_TAG:asyncMenu
   ];
   await Menu.bulkCreate(menuList, {updateOnDuplicate: ['path', 'name', 'icon', 'enable', 'parentPath', 'type']});
