@@ -31,8 +31,11 @@ class BookPage extends PageBase {
         key={bookItem.id}
         cover={(
           <div className={`cover-image ${bookItem.coverImage ? '' : 'empty'}`}
-               style={bookItem.coverImage && {backgroundImage: `url(${bookItem.coverImage || ''})`}}
+               style={bookItem.coverImage ? {backgroundImage: `url(${bookItem.coverImage || ''})`} : null}
           />)}
+        actions={bookMarkStatus.slice(1, bookMarkStatus.length).map((status, index) => (
+          <span key={status} onClick={() => bookMark.markBook(bookItem.id, {status: index + 1})}>{status}</span>
+        ))}
         title={bookItem.name}
       >
         <DataGrid>
@@ -48,7 +51,6 @@ class BookPage extends PageBase {
     const {dataList, operateType, showFormModal, selectedKeys, rowSelection, firstSelected, pagination} = book;
     return (
       <div className="base-layout book-page">
-        <Title title='书籍管理'/>
         <div className="operate-bar">
           <Input.Search
             className={'search'}

@@ -4,11 +4,9 @@
  */
 
 import React, {Component} from 'react';
-import {Button, message, Input, Card} from 'antd';
-import Reactable from "@eatong/reactable";
+import {Button, message, Input, Card, Pagination, Radio, Rate} from 'antd';
 import BookMarkFormModal from "./BookMarkFormModal";
 import {inject, observer} from "mobx-react";
-import Title from "~/components/Title";
 import PageBase from "~/components/PageBase";
 import {bookMarkStatus} from "../../../bothSide/enums";
 import DataGrid from "../../components/DataGrid";
@@ -16,14 +14,7 @@ import DataRow from "../../components/DataRow";
 import moment from "moment";
 
 const ButtonGroup = Button.Group;
-const columns = [
-  {title: '名称', key: 'name', render: (text, row) => row.book.name},
-  {title: '副标题', key: 'subTitle', render: (text, row) => row.book.subTitle},
-  {title: '作者', key: 'author', render: (text, row) => row.book.author},
-  {title: '总字数', key: 'letterCount', render: (text, row) => row.book.letterCount},
-  {title: '出版方', key: 'publisher', render: (text, row) => row.book.publisher},
-  {title: '出版日期', key: 'publishTime', render: (text, row) => row.book.publishTime},
-];
+const RadioGroup = Radio.Group;
 
 @inject('bookMark', 'app') @observer
 class BookMarkPage extends PageBase {
@@ -42,11 +33,8 @@ class BookMarkPage extends PageBase {
           cover={(
             <div
               className={`cover-image ${bookItem.coverImage ? '' : 'empty'}`}
-              style={bookItem.coverImage && {backgroundImage: `url(${bookItem.coverImage || ''})`}}
+              style={bookItem.coverImage ? {backgroundImage: `url(${bookItem.coverImage || ''})`} : null}
             />)}
-          actions={bookMarkStatus.slice(1, bookMarkStatus.length).map((status, index) => (
-            <span key={status} onClick={() => bookMark.markBook(bookItem.bookId, {status: index + 1})}>{status}</span>
-          ))}
           title={bookItem.name}
         >
           <DataGrid>
@@ -55,13 +43,12 @@ class BookMarkPage extends PageBase {
               label={'出版日期'}>{bookItem.publishTime && moment(bookItem.publishTime).format('YYYY-MM-DD')}</DataRow>
           </DataGrid>
           <div className="footer">
-            <p className="star">
-              {mark.star ? (<span className="star">{`我的评分：${mark.star}`}</span>) :
-                <span className="placeholder">暂未评价</span>
-              }
-            </p>
+            <div className="rate">
+              <Rate defaultValue={mark.rate} onChange={(value) => bookMark.rate(bookItem.id, value)}/>
+            </div>
             <div className="status">
               {bookMarkStatus[mark.status]}
+              {mark.status === 3 && (<span className="et-remark">{moment(mark.finishTime).format('YYYY-MM-DD')}</span>)}
             </div>
           </div>
         </Card>
@@ -71,10 +58,9 @@ class BookMarkPage extends PageBase {
 
   render() {
     const {bookMark} = this.props;
-    const {dataList, operateType, showFormModal, selectedKeys, rowSelection, firstSelected, pagination} = bookMark;
+    const {operateType, showFormModal, selectedKeys, rowSelection, firstSelected, pagination} = bookMark;
     return (
       <div className="base-layout bookMark-page">
-        <Title title='我的读书'/>
         <div className="operate-bar">
           <Input.Search
             className={'search'}
@@ -91,17 +77,19 @@ class BookMarkPage extends PageBase {
             </Button>
           </ButtonGroup>
         </div>
+        <div className="filter-bar">
+          <Radio.Group
+            value={bookMark.queryOption.status}
+            onChange={(event) => bookMark.onChangeQueryOption('status', event.target.value)}
+          >
+            <Radio.Button value={-1}>全部</Radio.Button>
+            {bookMarkStatus.map((status, index) => (
+              <Radio.Button value={index} key={status}>{status}</Radio.Button>
+            ))}
+          </Radio.Group>
+        </div>
         <div className="book-list">{this.renderBooks()}</div>
-        <Reactable
-          columns={columns}
-          dataSource={dataList}
-          rowKey="id"
-          tableId="bookMark-table"
-          pagination={bookMark.pagination}
-          rowSelection={{
-            selectedRowKeys: selectedKeys,
-            onChange: (keys) => bookMark.onChangeSelection(keys)
-          }}/>
+        <Pagination {...bookMark.pagination}/>
         {showFormModal && (
           <BookMarkFormModal
             onCancel={() => bookMark.toggleFormModal()}

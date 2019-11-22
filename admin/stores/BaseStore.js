@@ -17,6 +17,7 @@ export default class BaseStore {
   @observable pageSize = PAGE_SIZE;
   @observable total = 0;
   @observable detailData = {};
+  @observable queryOption = {};
 
   listApi = '';
   addApi = '';
@@ -60,6 +61,8 @@ export default class BaseStore {
     const queryOption = this.queryOption || {};
     queryOption[field] = value;
     this.queryOption = queryOption;
+    this.clearData();
+    this.getDataList();
   }
 
   @action toggleFormModal(operateType, visible) {

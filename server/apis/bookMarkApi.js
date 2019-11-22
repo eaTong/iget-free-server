@@ -15,6 +15,10 @@ module.exports = {
     const loginUser = ctx.session.loginUser;
     return await bookMarkService.markBook(ctx.request.body, loginUser);
   },
+  rate: async (ctx) => {
+    const loginUser = ctx.session.loginUser;
+    return await bookMarkService.rate(ctx.request.body, loginUser);
+  },
   updateBookMarks: async (ctx) => {
     const loginUser = ctx.session.loginUser;
     return await bookMarkService.updateBookMarks(ctx.request.body, loginUser);

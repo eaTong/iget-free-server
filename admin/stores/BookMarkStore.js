@@ -5,7 +5,7 @@
 
 import {observable, action} from 'mobx';
 import ajax from "~/utils/ajax";
-import {message, Modal, Form, DatePicker} from 'antd';
+import {message, Modal, Form, DatePicker, Input} from 'antd';
 import BaseStore from '~/stores/BaseStore'
 import {GLOBAL_LAYOUT} from "../utils/constants";
 import moment from "moment";
@@ -20,6 +20,7 @@ export default class BookMarkStore extends BaseStore {
   updateApi = '/api/bookMark/update';
   deleteApi = '/api/bookMark/delete';
   detailApi = '/api/bookMark/detail';
+  @observable queryOption = {status: -1};
 
   @action
   async searchData(keywords) {
@@ -51,5 +52,25 @@ export default class BookMarkStore extends BaseStore {
       const {isNew} = await ajax({url: '/api/bookMark/mark', data: {bookId, status}});
       message.success(isNew ? `已加入到${bookMarkStatus[status]}清单` : `更新状态为：${bookMarkStatus[status]}`);
     }
+  }
+
+  @action
+  async rate(bookId, rate) {
+    let reason;
+    Modal.confirm({
+      title: '请填写评分理由',
+      content: (
+        <Form>
+          <Input.TextArea
+            autoRows={{minRows: 3}}
+            placeholder={'评分理由'}
+            onChange={(event => reason = event.target.value)}/>
+        </Form>
+      ),
+      async onOk() {
+        await ajax({url: '/api/bookMark/rate', data: {bookId, rate, reason}});
+        message.success('评分成功');
+      }
+    })
   }
 }

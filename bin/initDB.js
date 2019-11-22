@@ -6,6 +6,7 @@ const OperationLog = require('../server/models/OperationLog');
 const Menu = require('../server/models/Menu');
 const Book = require('../server/models/Book');
 const BookMark = require('../server/models/BookMark');
+const RateHistory = require('../server/models/RateHistory');
 //UPDATE_TAG:importModel
 
 (async () => {
@@ -21,6 +22,7 @@ async function initialDatabaseStructure() {
   await Menu.sync({alter: true});
   await Book.sync({alter: true});
   await BookMark.sync({alter: true});
+  await RateHistory.sync({alter: true});
 //UPDATE_TAG:asyncModel
 }
 
