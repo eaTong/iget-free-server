@@ -2,6 +2,7 @@
 
 .ant-layout {
   height: 100%;
+
   & > .ant-layout-header {
     height: 50px;
     line-height: unset;
@@ -12,11 +13,14 @@
     padding: 5px 10px;
     align-items: center;
     justify-content: center;
+
     .brand {
       flex: 1;
+
       .brand-name {
         font-size: 18px;
       }
+
       .slogan {
         color: rgba(255, 255, 255, 0.8);
       }
@@ -26,37 +30,42 @@
       padding-right: 5px;
       cursor: pointer;
     }
+
     .anticon {
       cursor: pointer;
       color: @error-color;
     }
   }
+
   & > .ant-layout {
     & > .ant-layout-sider {
       .ant-layout-sider-children {
         display: flex;
         flex-direction: column;
+
         .ant-menu {
           flex: 1;
         }
       }
     }
-    & > .ant-layout-content {
-      color: red;
 
+    & > .ant-layout-content {
       & > .ant-tabs {
         height: 100%;
         display: flex;
         flex-direction: column;
+
         & > .ant-tabs-bar {
           margin-bottom: 0;
           padding-top: 5px;
+
           .ant-tabs-tab {
             .anticon {
               display: none;
               margin-left: 5px;
               margin-right: 0;
             }
+
             &.ant-tabs-tab-active {
               .anticon {
                 display: inline-block;
@@ -64,8 +73,10 @@
             }
           }
         }
+
         & > .ant-tabs-content {
           flex: 1;
+
           & > .ant-tabs-tabpane {
             height: 100%;
           }
@@ -88,6 +99,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+
   .title {
     text-align: left;
     font-size: 16px;
@@ -96,6 +108,7 @@
     background-color: #fff;
     border-bottom: 1px solid @border-color-base;
   }
+
   .operate-bar {
     display: flex;
     background-color: #fff;
@@ -103,27 +116,34 @@
     min-height: 50px;
     justify-content: center;
     align-items: center;
+
     .label {
       white-space: nowrap;
     }
+
     & > .ant-input-search {
       width: 200px;
     }
+
     .buttons {
       flex: 1;
       text-align: right;
     }
   }
+
   .content {
     flex: 1;
   }
+
   .footer {
     padding: 8px 4px;
     text-align: right;
+
     & > * {
       margin-right: 10px;
     }
   }
+
   .ant-pagination {
     padding: 5px;
     text-align: right;
@@ -132,6 +152,7 @@
 
 .text-button {
   margin-left: 5px;
+
   &:nth-child(1) {
     margin-left: 0;
   }
@@ -140,15 +161,18 @@
 .data-grid {
   list-style: none;
   padding-left: 0;
+
   .data-row {
     display: flex;
-    padding: 10px;
+    padding: 5px 10px;
+
     .label {
       min-width: 6em;
-      color: @heading-color;
-    }
-    .value {
       color: @text-color;
+    }
+
+    .value {
+      color: @heading-color;
       flex: 1;
     }
   }
@@ -161,6 +185,7 @@
 .link-text {
   color: @primary-color;
   cursor: pointer;
+
   &.block {
     display: inline-block;
     width: 100%;
@@ -181,6 +206,7 @@
 
 .pic-list {
   padding-left: 0;
+
   &:after {
     content: '';
     display: block;
@@ -194,11 +220,13 @@
     -webkit-overflow-scrolling: touch;
     overflow-x: auto;
     white-space: nowrap;
+
     .scroll-pic-item {
       width: auto;
       height: 100px;
       margin-right: 10px;
       display: inline-block;
+
       img {
         height: 100%;
         width: auto;
@@ -214,11 +242,13 @@
     margin: 1%;
     box-sizing: border-box;
     width: 31.333333%;
+
     &:after {
       content: '';
       display: block;
       margin-top: 100%;
     }
+
     .img-box {
       position: absolute;
       top: 0;
@@ -231,11 +261,13 @@
       text-align: center;
       align-items: center;
       display: flex;
+
       & > * {
         flex: 1;
         max-width: 100%;
         max-height: 100%;
       }
+
       .shadow {
         position: absolute;
         color: #fff;

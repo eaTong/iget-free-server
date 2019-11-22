@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react';
-import {Button, message, Input, Card} from 'antd';
+import {Button, message, Input, Card, Pagination} from 'antd';
 import Reactable from "@eatong/reactable";
 import BookFormModal from "./BookFormModal";
 import {inject, observer} from "mobx-react";
@@ -12,6 +12,7 @@ import Title from "~/components/Title";
 import PageBase from "~/components/PageBase";
 import DataGrid from "../../components/DataGrid";
 import DataRow from "../../components/DataRow";
+import moment from "moment";
 
 const ButtonGroup = Button.Group;
 const columns = [
@@ -33,8 +34,10 @@ class BookPage extends PageBase {
     const {book} = this.props;
     return book.dataList.map(bookItem => (
       <Card
+        className={'book-item'}
         key={bookItem.id}
-        style={{width: 300, marginTop: 16,display:'inline-block'}}
+        cover={(<div className={`cover-image ${bookItem.coverImage ? '' : 'empty'}`}
+                     style={{backgroundImage: `url(${bookItem.coverImage})`}}/>)}
         actions={[
           <span>想读</span>,
           <span>在读</span>,
@@ -42,11 +45,10 @@ class BookPage extends PageBase {
         ]}
         title={bookItem.name}
       >
-        <img src={bookItem.coverImage } alt=""/>
-        <p>{bookItem.subTitle}</p>
+        <div className={'sub-title'}>{bookItem.subTitle}</div>
         <DataGrid>
           <DataRow label={'作者'}>{bookItem.author}</DataRow>
-          <DataRow label={'出版日期'}>{bookItem.publishTime}</DataRow>
+          <DataRow label={'出版日期'}>{bookItem.publishTime && moment(bookItem.publishTime).format('YYYY-MM-DD')}</DataRow>
         </DataGrid>
       </Card>
     ))
@@ -74,17 +76,10 @@ class BookPage extends PageBase {
             </Button>
           </ButtonGroup>
         </div>
-        {this.renderBooks()}
-        <Reactable
-          columns={columns}
-          dataSource={dataList}
-          rowKey="id"
-          tableId="book-table"
-          pagination={book.pagination}
-          rowSelection={{
-            selectedRowKeys: selectedKeys,
-            onChange: (keys) => book.onChangeSelection(keys)
-          }}/>
+        <div className="book-list">
+          {this.renderBooks()}
+        </div>
+        <Pagination {...book.pagination}/>
         {showFormModal && (
           <BookFormModal
             onCancel={() => book.toggleFormModal()}

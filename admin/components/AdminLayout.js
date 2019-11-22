@@ -16,8 +16,6 @@ const {Content, Sider, Header} = Layout;
 
 @inject('app') @observer
 class AdminLayout extends Component {
-
-
   async componentWillMount() {
     this.props.app.initialLoginUser();
     await this.props.app.getAuthorisedMenu();
@@ -38,7 +36,7 @@ class AdminLayout extends Component {
         )
       } else if (menu.type === 1) {
         return (
-          <MenuItem key={menu.path} onClick={() => this.props.app.addTab(menu.path, menu.name)}>
+          <MenuItem key={menu.path} onClick={() => this.props.history.push(menu.path)}>
             <span><Icon type={menu.icon}/><span>{menu.name}</span></span>
           </MenuItem>
         )
@@ -70,16 +68,15 @@ class AdminLayout extends Component {
   }
 
   render() {
-    const {app} = this.props;
-    const {loginUser, menus, tabList, activeKey} = app;
+    const {app, location} = this.props;
+    const {loginUser, menus} = app;
     return (
       <Layout>
         <Header className="header">
           <div className="brand">
             <span className="brand-name">得到-书香</span>
-            <span className="slogan"></span>
+            <span className="slogan"/>
           </div>
-
           <span className="welcome">欢迎您：</span>
           <span className="name" onClick={() => app.toggleChangePasswordModal(true)}>{loginUser.name}</span>
           <Tooltip title='退出'>
@@ -88,15 +85,13 @@ class AdminLayout extends Component {
         </Header>
         <Layout className="layout">
           <Sider>
-            <Menu mode="inline" theme="dark">
+            <Menu mode="inline" theme="dark" defaultSelectedKeys={[location.pathname]}>
               {this.childrenMenus(menus)}
             </Menu>
 
           </Sider>
           <Content>
-            <Tabs onChange={(path) => app.onChangeTab(path)} type="card" activeKey={activeKey} animated>
-              {this.renderTabs()}
-            </Tabs>
+            {this.props.children}
           </Content>
         </Layout>
         {app.showChangePasswordModal && (
@@ -109,10 +104,6 @@ class AdminLayout extends Component {
 
     )
   }
-}
-
-function callback(key) {
-  console.log(key);
 }
 
 AdminLayout.propsType = {};

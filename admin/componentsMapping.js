@@ -7,8 +7,8 @@ import BookMarkPage from './pages/bookMark/BookMarkPage';
 const componentsMapping = {
   '/admin/index': AdminIndexPage,
   '/admin/user': UserPage,
-   '/admin/book': BookPage,
-   '/admin/bookMark': BookMarkPage,
+  '/admin/book': BookPage,
+  '/admin/bookMark': BookMarkPage,
 //UPDATE_TAG:addPageRoute
 };
 

@@ -1,4 +1,3 @@
-
 /**
  * Created by eaTong on 2019-11-20 .
  * Description: auto generated in  2019-11-20
@@ -18,10 +17,10 @@ module.exports = {
     return await bookService.deleteBooks(ctx.request.body.ids);
   },
   getBooks: async (ctx) => {
-    return await bookService.getBooks(ctx.request.body);
+    const loginUser = ctx.session.loginUser;
+    return await bookService.getBooks(ctx.request.body, loginUser);
   },
   getBookDetail: async (ctx) => {
     return await bookService.getBookDetail(ctx.request.body);
   }
 };
-  
