@@ -29,11 +29,10 @@ class BookPage extends PageBase {
       <Card
         className={'book-item'}
         key={bookItem.id}
-        cover={(<div className={`cover-image ${bookItem.coverImage ? '' : 'empty'}`}
-                     style={{backgroundImage: `url(${bookItem.coverImage})`}}/>)}
-        actions={bookMarkStatus.slice(1, bookMarkStatus.length).map((status, index) => (
-          <span key={status} onClick={() => bookMark.markBook(bookItem.id, {status: index + 1})}>{status}</span>
-        ))}
+        cover={(
+          <div className={`cover-image ${bookItem.coverImage ? '' : 'empty'}`}
+               style={bookItem.coverImage && {backgroundImage: `url(${bookItem.coverImage || ''})`}}
+          />)}
         title={bookItem.name}
       >
         <DataGrid>
