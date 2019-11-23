@@ -62,7 +62,7 @@ export default class BookMarkStore extends BaseStore {
       content: (
         <Form>
           <Input.TextArea
-            autoRows={{minRows: 3}}
+            autoSize={{minRows: 3}}
             placeholder={'评分理由'}
             onChange={(event => reason = event.target.value)}/>
         </Form>

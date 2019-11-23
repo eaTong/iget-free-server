@@ -6,6 +6,7 @@ import AppStore from './AppStore';
 import UserStore from "~/stores/UserStore";
 import BookStore from './BookStore';
 import BookMarkStore from './BookMarkStore';
+import BookNoteStore from './BookNoteStore';
 //UPDATE_TAG:importStore
 
 export default {
@@ -13,5 +14,6 @@ export default {
   user: new UserStore(),
 book: new BookStore(),
 bookMark: new BookMarkStore(),
+bookNote: new BookNoteStore(),
 //UPDATE_TAG:registerStore
 }

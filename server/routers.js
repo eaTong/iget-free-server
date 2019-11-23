@@ -11,6 +11,7 @@ const userApi = require('./apis/userApi');
 const menuApi = require('./apis/menuApi');
 const bookApi = require('./apis/bookApi');
 const bookMarkApi = require('./apis/bookMarkApi');
+const bookNoteApi = require('./apis/bookNoteApi');
 //UPDATE_TAG:importApi
 
 const router = new Router();
@@ -43,6 +44,12 @@ router.post('/api/bookMark/update', insertLog('update'), checkArguments(['id']),
 router.post('/api/bookMark/rate', insertLog('update'), checkArguments(['bookId']), bookMarkApi.rate);
 router.post('/api/bookMark/delete', insertLog('delete'), checkArguments(['ids']), bookMarkApi.deleteBookMarks);
 router.post('/api/bookMark/detail', checkArguments(['id']), bookMarkApi.getBookMarkDetail);
+
+router.post('/api/bookNote/add', insertLog('add'), checkArguments(['bookId']), bookNoteApi.addBookNote);
+router.post('/api/bookNote/get', bookNoteApi.getBookNotes);
+router.post('/api/bookNote/update', insertLog('update'), checkArguments(['id',]), bookNoteApi.updateBookNotes);
+router.post('/api/bookNote/delete', insertLog('delete'), checkArguments(['ids']), bookNoteApi.deleteBookNotes);
+router.post('/api/bookNote/detail',  checkArguments(['id']), bookNoteApi.getBookNoteDetail);
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {

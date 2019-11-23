@@ -20,7 +20,7 @@ class ImageUploader extends Component {
       case 'done':
         this.setState({loading: false});
         const {file: {response: {data}}} = info;
-        this.props.onChange && this.props.onChange(maxCount === 1 ? data : [data]);
+        this.props.onChange && this.props.onChange(maxCount === 1 ? data : [...this.getValue(), data]);
 
     }
   }
@@ -28,17 +28,15 @@ class ImageUploader extends Component {
   getValue() {
     const {value, maxCount} = this.props;
     if (value) {
-      return maxCount === 1 ? [value] : JSON.parse(value);
+      return maxCount === 1 ? [value] : value;
     }
     return [];
   }
 
   render() {
-    console.log(this.getValue());
     const fileList = this.getValue().map(item => (
-      {uid: item, name: item, status: 'done', url: item,key:item}
+      {uid: item, name: item, status: 'done', url: item, key: item}
     ));
-    console.log(fileList);
     const uploadButton = (
       <div>
         <Icon type={this.state.loading ? 'loading' : 'plus'}/>

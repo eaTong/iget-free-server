@@ -61,20 +61,21 @@ const ${upperFirstLetter(form)} = require('../models/${upperFirstLetter(form)}')
 module.exports = {
   add${upperFirstLetter(form)}: async (${form},loginUser) => {
     ${form}.enable = true;
-    
+    ${form}.userId = loginUser.id;
+   
     return await ${upperFirstLetter(form)}.create(${form});
   },
 
   update${upperFirstLetter(form)}s: async (${form},loginUser) => {
-    return await ${upperFirstLetter(form)}.update(${form}, {where: {id: ${form}.id}})
+    return await ${upperFirstLetter(form)}.update(${form}, {where: {id: ${form}.id,userId:loginUser.id}})
   },
 
   delete${upperFirstLetter(form)}s: async (ids,loginUser) => {
-    return await ${upperFirstLetter(form)}.update({enable: false}, {where: {id: {[Op.in]: ids}}});
+    return await ${upperFirstLetter(form)}.update({enable: false}, {where: {id: {[Op.in]: ids},userId:loginUser.id}});
   },
 
   get${upperFirstLetter(form)}s: async ({pageIndex = 0, pageSize = 20, keywords = ''},loginUser) => {
-    const option = {where: {enable: true, name: {[Op.like]: \`\%\${keywords}%\`}}}; 
+    const option = {where: {enable: true,userId:loginUser.id, name: {[Op.like]: \`\%\${keywords}%\`}}}; 
     const {dataValues: {total}} = await ${upperFirstLetter(form)}.findOne({
       ...option,
       attributes: [[sequelize.fn('COUNT', '*'), 'total']]
@@ -84,7 +85,7 @@ module.exports = {
   },
 
   get${upperFirstLetter(form)}Detail: async ({id},loginUser) => {
-    return await ${upperFirstLetter(form)}.findOne({where: {id}});
+    return await ${upperFirstLetter(form)}.findOne({where: {id,userId:loginUser.id}});
   }
 }; 
   `;
