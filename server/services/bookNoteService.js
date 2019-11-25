@@ -21,7 +21,7 @@ module.exports = {
   },
 
   deleteBookNotes: async (ids, loginUser) => {
-    return await BookNote.update({enable: false}, {where: {id: {[Op.in]: ids, userId: loginUser.id}}});
+    return await BookNote.update({enable: false}, {where: {id: {[Op.in]: ids}, userId: loginUser.id}});
   },
 
   getBookNotes: async ({pageIndex = 0, pageSize = 20, keywords = ''}, loginUser) => {

@@ -9,7 +9,7 @@ const User = require('./User');
 const Book = require('./Book');
 
 const RateHistory = sequelize.define('rateHistory', {
-  rate: {type: Sequelize.STRING},
+  rate: {type: Sequelize.INTEGER},
   reason: {type: Sequelize.STRING, comment: '评分理由'},
 });
 

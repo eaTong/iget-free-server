@@ -28,7 +28,7 @@ export default class App extends Component {
         <Provider {...stores}>
           <BrowserRouter>
             <Fragment>
-              <Route path="/" component={HomePage} exact/>
+              <Route path="/" component={HomePage}/>
               <Route path="/login" component={LoginPage}/>
               <Route path="/admin" render={(props) => {
                 const Component = componentsMapping[props.location.pathname];

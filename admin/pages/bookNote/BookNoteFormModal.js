@@ -14,8 +14,9 @@ const FormItem = Form.Item;
 
 class BookNoteFormModal extends Component {
   componentDidMount() {
-    if (/(edit)|(copyAdd)/.test(this.props.operateType)) {
-      this.props.form.setFieldsValue(this.props.formData);
+    const {operateType, formData} = this.props;
+    if (/(edit)|(copyAdd)/.test(operateType)) {
+      this.props.form.setFieldsValue({...formData, bookId: String(formData.bookId)});
     }
   }
 
@@ -29,25 +30,28 @@ class BookNoteFormModal extends Component {
   }
 
   render() {
-    const {operateType} = this.props;
+    const {operateType, disableBook} = this.props;
     const {getFieldDecorator} = this.props.form;
     return (
       <Modal title={(operateType === 'add' ? '新增' : '编辑') + ''}
              maskClosable={false}
              visible={true} onOk={this.onSaveData.bind(this)} onCancel={this.props.onCancel}>
         <Form>
-          <FormItem
-            {...GLOBAL_LAYOUT}
-            label="关联书籍"
-            hasFeedback>
-            {getFieldDecorator('bookId', {
-              rules: [{
-                required: true, message: '请填写关联书籍!',
-              }],
-            })(
-              <AsyncSelect asyncUrl={'/api/book/get'}/>
-            )}
-          </FormItem>
+          {!disableBook && (
+            <FormItem
+              {...GLOBAL_LAYOUT}
+              label="关联书籍"
+              hasFeedback>
+              {getFieldDecorator('bookId', {
+                rules: [{
+                  required: true, message: '请填写关联书籍!',
+                }],
+              })(
+                <AsyncSelect asyncUrl={'/api/book/get'}/>
+              )}
+            </FormItem>
+
+          )}
           <FormItem {...GLOBAL_LAYOUT} label="笔记内容">
             {getFieldDecorator('content')(
               <Input.TextArea

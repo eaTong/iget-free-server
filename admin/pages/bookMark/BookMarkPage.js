@@ -41,8 +41,9 @@ class BookMarkPage extends PageBase {
         >
           <DataGrid>
             <DataRow label={'作者'}>{bookItem.author}</DataRow>
-            <DataRow
-              label={'出版日期'}>{bookItem.publishTime && moment(bookItem.publishTime).format('YYYY-MM-DD')}</DataRow>
+            <DataRow label={'出版日期'}>
+              {bookItem.publishTime && moment(bookItem.publishTime).format('YYYY-MM-DD')}
+            </DataRow>
           </DataGrid>
           <div className="footer">
             <div className="rate">
@@ -50,7 +51,9 @@ class BookMarkPage extends PageBase {
             </div>
             <div className="status">
               {bookMarkStatus[mark.status]}
-              {mark.status === 3 && (<span className="et-remark">{moment(mark.finishTime).format('YYYY-MM-DD')}</span>)}
+              {mark.status === 3 && (
+                <span className="et-remark">{moment(mark.finishTime).format('YYYY-MM-DD')}</span>
+              )}
             </div>
           </div>
         </Card>

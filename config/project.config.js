@@ -4,8 +4,8 @@
  */
 
 module.exports = {
-  devServerPort: 8080,
-  productionServerPort: 3000,
-  frontEndServerPort: 3000
+  devServerPort: 8000,
+  productionServerPort: 3001,
+  frontEndServerPort: 3001
 
 };

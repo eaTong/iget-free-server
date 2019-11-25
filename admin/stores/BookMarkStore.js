@@ -32,22 +32,25 @@ export default class BookMarkStore extends BaseStore {
   @action
   async markBook(bookId, {status}) {
     let finishTime;
-    if (status === 3) {
-      finishTime = moment();
-      Modal.confirm({
-        title: '请确认读完日期',
-        content: (
-          <Form>
-            <FormItem label={'读完日期'} {...GLOBAL_LAYOUT}>
-              <DatePicker defaultValue={finishTime} onChange={(val => finishTime = val)}/>
-            </FormItem>
-          </Form>
-        ),
-        async onOk() {
-          const {isNew} = await ajax({url: '/api/bookMark/mark', data: {bookId, finishTime, status}});
-          message.success(isNew ? `已加入到${bookMarkStatus[status]}清单` : `更新状态为：${bookMarkStatus[status]}`);
-        }
-      })
+    if (~~status === 3) {
+      return new Promise((resolve => {
+        finishTime = moment();
+        Modal.confirm({
+          title: '请确认读完日期',
+          content: (
+            <Form>
+              <FormItem label={'读完日期'} {...GLOBAL_LAYOUT}>
+                <DatePicker defaultValue={finishTime} onChange={(val => finishTime = val)}/>
+              </FormItem>
+            </Form>
+          ),
+          async onOk() {
+            const {isNew} = await ajax({url: '/api/bookMark/mark', data: {bookId, finishTime, status}});
+            message.success(isNew ? `已加入到${bookMarkStatus[status]}清单` : `更新状态为：${bookMarkStatus[status]}`);
+            resolve();
+          }
+        })
+      }))
     } else {
       const {isNew} = await ajax({url: '/api/bookMark/mark', data: {bookId, status}});
       message.success(isNew ? `已加入到${bookMarkStatus[status]}清单` : `更新状态为：${bookMarkStatus[status]}`);
@@ -56,21 +59,24 @@ export default class BookMarkStore extends BaseStore {
 
   @action
   async rate(bookId, rate) {
-    let reason;
-    Modal.confirm({
-      title: '请填写评分理由',
-      content: (
-        <Form>
-          <Input.TextArea
-            autoSize={{minRows: 3}}
-            placeholder={'评分理由'}
-            onChange={(event => reason = event.target.value)}/>
-        </Form>
-      ),
-      async onOk() {
-        await ajax({url: '/api/bookMark/rate', data: {bookId, rate, reason}});
-        message.success('评分成功');
-      }
-    })
+    return new Promise((resolve => {
+      let reason;
+      Modal.confirm({
+        title: '请填写评分理由',
+        content: (
+          <Form>
+            <Input.TextArea
+              autoSize={{minRows: 3}}
+              placeholder={'评分理由'}
+              onChange={(event => reason = event.target.value)}/>
+          </Form>
+        ),
+        async onOk() {
+          await ajax({url: '/api/bookMark/rate', data: {bookId, rate, reason}});
+          message.success('评分成功');
+          resolve();
+        }
+      })
+    }))
   }
 }

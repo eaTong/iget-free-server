@@ -286,7 +286,247 @@
     }
   }
 }
-.et-remark{
-  font-size:0.8em;
-  color:@text-color-secondary;
+
+.et-remark {
+  font-size: 0.8em;
+  color: @text-color-secondary;
+}
+
+.et-pictures-container {
+  &:after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 100%;
+    clear: both;
+  }
+
+  .status-loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #cfd8dc;
+
+    .ant-progress-bg {
+      height: 3px !important;
+    }
+
+  }
+
+  .et-picture-item {
+    float: left;
+    position: relative;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+
+    &:after {
+      content: '';
+      display: block;
+      margin-top: 100%;
+    }
+
+    .img-box {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      left: 0;
+      bottom: 0;
+      overflow: hidden;
+      cursor: pointer;
+      background: no-repeat center center;
+      background-size: cover;
+    }
+
+    &.video-item {
+      .play-icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        font-size: 40px;
+        color: rgba(0, 0, 0, 0.45);
+        margin-top: -20px;
+        margin-left: -20px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .childrenAs-number-content {
+    display: inline-block;
+    color: @primary-color;
+    cursor: pointer;
+    border-bottom: 1px solid @primary-color;
+  }
+}
+
+.et-pictures-preview-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 99999;
+  user-select: none;
+
+  .navigator-icon {
+    padding: 20px;
+    cursor: pointer;
+    width: 70px;
+    top: 50%;
+    margin-top: -35px;
+    position: absolute;
+    z-index: 99;
+
+    &.left {
+      left: 200px;
+    }
+
+    &.right {
+      right: 0;
+    }
+
+    &.disabled .anticon {
+      opacity: 0.8;
+    }
+
+    .anticon {
+      font-size: 30px;
+      color: #fff;
+    }
+  }
+
+  .shadow {
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+
+  .close-button {
+    position: absolute;
+    font-size: 40px;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+    color: #fff;
+    opacity: 0.4;
+    z-index: 999;
+    transition: all 400ms;
+
+    &:hover {
+      transform: rotate(180deg);
+    }
+  }
+
+  .preview-container {
+    left: 200px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    padding: 30px 70px;
+    white-space: nowrap;
+
+    &.video-container {
+      padding: 80px 30px 30px;
+
+      .video-box {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    & > {
+      img {
+        max-height: 90%;
+        max-width: 100%;
+        width: auto;
+        height: auto;
+        transition: transform 200ms;
+        position: relative;
+      }
+    }
+  }
+
+  .toolbar-line {
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+
+    .ant-btn-group {
+      transform: scale(1.5);
+      transform-origin: bottom;
+
+      .reverse {
+        transform: rotateY(180deg);
+      }
+
+      .progress {
+        background-color: #fff;
+        color: @text-color;
+        padding: 8px 10px 6px;
+        font-size: 12px;
+      }
+    }
+
+    .preview-index {
+      float: right;
+      padding-top: 10px;
+    }
+  }
+}
+
+.et-image {
+  width: 200px;
+  height: 150px;
+  display: inline-block;
+
+  &.full {
+    width: 100%;
+    height: 100%;
+  }
+
+  .image-instance {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+.popover-select {
+  .popover-select-item {
+    padding: 8px 10px;
+    cursor: pointer;
+    &:hover {
+      color: @primary-color;
+    }
+
+    &.active {
+      color: @primary-color;
+    }
+  }
+}
+
+.ant-upload-list-item-thumbnail {
+  overflow: hidden;
 }

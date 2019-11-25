@@ -34,22 +34,20 @@ module.exports = {
     const list = await Book.findAll({
       offset: pageIndex * pageSize,
       limit: pageSize, ...option,
-      include: {model: BookMark, required: false, where: {userId: loginUser.id}}
+      order: [['createdAt', 'desc']],
+      include: {model: BookMark, required: false, where: {userId: loginUser.id, enable: true}}
     });
     return {total, list}
   },
 
   getBookDetail: async ({id}, loginUser) => {
-    return await Book.findOne({
+    const book = await Book.findOne({
       where: {id},
       include: [
-        {
-          model: BookMark,
-          required: false,
-          where: {userId: loginUser.id}
-        },
-        {model: RateHistory},
-        {model: BookNote}]
+        {model: RateHistory,required: false, order: [['createdAt', 'desc']]},
+        {model: BookNote, required: false,order: [['createdAt', 'desc']], where: {enable: true}}]
     });
+    const mark = await BookMark.findOne({where: {bookId: id, userId: loginUser.id}});
+    return {...book.dataValues, mark: mark.dataValues};
   }
 };

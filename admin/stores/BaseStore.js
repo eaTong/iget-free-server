@@ -129,27 +129,40 @@ export default class BaseStore {
   @action
   async onSaveData(formData) {
     if (/(add)|(copyAdd)/.test(this.operateType)) {
-      await ajax({url: this.addApi, data: formData});
+      await this.add(formData);
       message.success('新增成功');
       this.toggleFormModal();
       await this.getDataList();
     } else {
-      await ajax({url: this.updateApi, data: {id: this.getKey(this.firstSelected), ...formData}});
+      await this.update({id: this.getKey(this.firstSelected), ...formData});
       message.success('编辑成功');
       this.toggleFormModal();
       await this.getDataList();
     }
   }
 
+  async add(data) {
+    return await ajax({url: this.addApi, data});
+  }
+
+  async update(data) {
+    return await ajax({url: this.updateApi, data});
+  }
+
   @action
   async deleteData() {
-    await ajax({url: this.deleteApi, data: {ids: this.selectedKeys}});
+    await this.delete(this.selectedKeys);
     message.success('删除成功');
     if (this.pageIndex * this.pageSize + this.selectedKeys.length === this.total) {
       this.pageIndex = Math.max(this.pageIndex - 1, 0);
     }
     await this.getDataList();
     this.selectedKeys = [];
+  }
+
+  @action
+  async delete(ids) {
+    await ajax({url: this.deleteApi, data: {ids}});
   }
 
   @action
