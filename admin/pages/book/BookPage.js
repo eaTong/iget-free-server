@@ -14,6 +14,7 @@ import DataGrid from "../../components/DataGrid";
 import DataRow from "../../components/DataRow";
 import moment from "moment";
 import {bookMarkStatus} from "../../../bothSide/enums";
+import {Link} from "react-router-dom";
 
 const ButtonGroup = Button.Group;
 
@@ -29,6 +30,7 @@ class BookPage extends PageBase {
       <Card
         className={'book-item'}
         key={bookItem.id}
+        extra={<Link to={`/admin/bookDetail?id=${bookItem.id}`}>更多</Link>}
         cover={(
           <div className={`cover-image ${bookItem.coverImage ? '' : 'empty'}`}
                style={bookItem.coverImage ? {backgroundImage: `url(${bookItem.coverImage || ''})`} : null}

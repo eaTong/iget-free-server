@@ -8,6 +8,8 @@ const sequelize = require('../framework/database');
 const {LogicError} = require('../framework/errors');
 const Book = require('../models/Book');
 const BookMark = require('../models/BookMark');
+const RateHistory = require('../models/RateHistory');
+const BookNote = require('../models/BookNote');
 
 module.exports = {
   addBook: async (book) => {
@@ -37,7 +39,17 @@ module.exports = {
     return {total, list}
   },
 
-  getBookDetail: async ({id}) => {
-    return await Book.findOne({where: {id}});
+  getBookDetail: async ({id}, loginUser) => {
+    return await Book.findOne({
+      where: {id},
+      include: [
+        {
+          model: BookMark,
+          required: false,
+          where: {userId: loginUser.id}
+        },
+        {model: RateHistory},
+        {model: BookNote}]
+    });
   }
 };

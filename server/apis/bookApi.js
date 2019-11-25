@@ -21,6 +21,7 @@ module.exports = {
     return await bookService.getBooks(ctx.request.body, loginUser);
   },
   getBookDetail: async (ctx) => {
-    return await bookService.getBookDetail(ctx.request.body);
+    const loginUser = ctx.session.loginUser;
+    return await bookService.getBookDetail(ctx.request.body, loginUser);
   }
 };

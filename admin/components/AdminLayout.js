@@ -9,6 +9,7 @@ import componentsMapping from '~/componentsMapping';
 import {REFRESH_TAG} from "~/utils/constants";
 import ChangePassword from '~/pages/personalCenter/ChangePassword';
 
+
 const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
 const TabPane = Tabs.TabPane;
@@ -42,29 +43,6 @@ class AdminLayout extends Component {
         )
       }
     })
-  }
-
-  renderTabs() {
-    return this.props.app.tabList.map((tab, index) => {
-      const {app} = this.props;
-      let tabName = index === 0 ?
-        (<span>
-          <span className="label">{tab.name}</span>
-          <Icon type="sync" onClick={() => app.refreshTab(tab, index)}/>
-        </span>) :
-        (<span>
-          <span className="label">{tab.name}</span>
-          <Icon type="sync" onClick={() => app.refreshTab(tab, index)}/>
-          <Icon type="close" onClick={(event) => app.closeTab(tab.path, event)}/>
-        </span>);
-
-      let realUrl = tab.path.split('?')[0].split(REFRESH_TAG)[0];
-      const Comp = componentsMapping[realUrl];
-      return (<TabPane tab={tabName} key={tab.path}>
-        <Comp {...(tab.optionalData || {})} path={realUrl}/>
-      </TabPane>);
-    })
-
   }
 
   render() {
