@@ -4,11 +4,11 @@
   "description": "fully is a full solution for full stack with react and koa .",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
     "dev": "node index.js",
     "admin-dev": "node adminDevServer.js",
     "build-pages": "next build",
-    "build-admin-pages": "NODE_ENV=production webpack --config config/webpack.production.config.js ",
+    "build-admin-pages": "cross-env NODE_ENV=production webpack --config config/webpack.production.config.js ",
     "package": "node bin/packageCode.js",
     "upload": "node bin/uploadProductionFiles",
     "auto-publish": "npm run build-pages && npm run build-admin-pages && npm run package && npm run upload"

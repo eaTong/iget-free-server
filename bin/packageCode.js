@@ -14,7 +14,7 @@ if (!fs.existsSync(dir)) {
   fs.mkdirSync(dir);
 }
 
-const output = fs.createWriteStream(`build/${moment().format('iget-build-YYYY-MM-DD')}.zip`);
+const output = fs.createWriteStream(`build/iget-build-${moment().format('YYYY-MM-DD')}.zip`);
 const archive = archiver('zip', {
   zlib: {level: 9} // Sets the compression level.
 });

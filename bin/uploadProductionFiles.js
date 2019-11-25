@@ -7,9 +7,9 @@ client.addListener('transfer', (a, b, c) => {
 client.scp('build/', {
   host: '118.24.75.69',
   username: 'ubuntu',
-  privateKey: require("fs").readFileSync('/Users/liuyajun/certifcate/eaTong_pem'),
+  privateKey: fs.readFileSync(fs.existsSync('C:\\certificate') ? 'C:\\certificate\\eaTong' : '/Users/liuyajun/certifcate/eaTong'),
   passphrase: '',
-  path: '/home/ubuntu/fully_build'
+  path: '/home/ubuntu/iget-build'
 }, function (err, ...args) {
   console.log(err, ...args);
 });
