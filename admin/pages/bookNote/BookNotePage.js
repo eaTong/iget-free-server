@@ -29,7 +29,7 @@ class BookNotePage extends PageBase {
     const {dataList, operateType, showFormModal, selectedKeys, rowSelection, firstSelected, pagination} = bookNote;
     return (
       <div className="base-layout bookNote-page">
-        <Title title='bookNote管理'/>
+        <Title title='心得'/>
         <div className="operate-bar">
           <Input.Search
             className={'search'}

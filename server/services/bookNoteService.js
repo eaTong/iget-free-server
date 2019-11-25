@@ -27,10 +27,18 @@ module.exports = {
   getBookNotes: async ({pageIndex = 0, pageSize = 20, keywords = ''}, loginUser) => {
     const option = {
       where: {
-        enable: true,
-        userId: loginUser.id,
-        content: {[Op.like]: `%${keywords}%`},
-        reference: {[Op.like]: `%${keywords}%`}
+        [Op.and]: [
+          {
+            enable: true,
+            userId: loginUser.id
+          },
+          {
+            [Op.or]: [
+              {content: {[Op.like]: `%${keywords}%`}},
+              {reference: {[Op.like]: `%${keywords}%`}},
+            ]
+          }
+        ]
       }
     };
     const {dataValues: {total}} = await BookNote.findOne({
