@@ -47,6 +47,7 @@
     "koa-router": "^7.4.0",
     "koa-session-minimal": "^3.0.4",
     "koa-static": "^5.0.0",
+    "koa2-cors": "^2.0.6",
     "mini-css-extract-plugin": "^0.8.0",
     "minimist": "^1.2.0",
     "mssql": "^4.3.7",

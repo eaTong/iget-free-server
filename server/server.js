@@ -15,12 +15,12 @@ const serve = require('koa-static');
 const koaLogger = require('koa-logger');
 const session = require('koa-session-minimal');
 const MysqlStore = require('koa-mysql-session');
+const cors = require('koa2-cors');
+
 const router = require('./routers');
 const routes = require('../page-routes');
 const {proxy} = require('./framework/middleWare');
 require('./framework/schedule');
-
-
 const projectConfig = require('../config/project.config');
 const serverConfig = require('../config/server.config');
 
@@ -60,6 +60,20 @@ nextServer.prepare()
     }));
 //use koaBody to resolve data
     app.use(koaBody({multipart: true}));
+
+    app.use(cors({
+      origin: function (ctx) {
+        const origin = ctx.req.headers.origin;
+        if (/localhost/.test(origin)) {
+          return origin;
+        }
+      },
+      exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+      maxAge: 5,
+      credentials: true,
+      allowMethods: ['GET', 'POST', 'DELETE'],
+      allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    }));
 
     router.get('/login', async ctx => {
       ctx.type = 'html';
