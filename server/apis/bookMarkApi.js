@@ -33,7 +33,7 @@ module.exports = {
   },
   getBookMarksStatics: async (ctx) => {
     const loginUser = ctx.session.loginUser;
-    return await bookMarkService.getBookMarksStatics(ctx.request.body, loginUser);
+    return await bookMarkService.getBookMarksStatics(loginUser);
   },
   getBookMarkDetail: async (ctx) => {
     const loginUser = ctx.session.loginUser;
