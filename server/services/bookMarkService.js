@@ -76,9 +76,9 @@ module.exports = {
       count[item.status] = item.total;
     });
     return {
-      read: {count: count[1], covers: covers[0]},
+      wanted: {count: count[1], covers: covers[0]},
       reading: {count: count[2], covers: covers[1]},
-      wanted: {count: count[3], covers: covers[2]}
+      read: {count: count[3], covers: covers[2]},
     };
   },
 
