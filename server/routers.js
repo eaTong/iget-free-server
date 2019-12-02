@@ -39,6 +39,7 @@ router.post('/api/book/detail', checkArguments(['id']), bookApi.getBookDetail);
 
 router.post('/api/bookMark/add', insertLog('add'), checkArguments(['bookId']), bookMarkApi.addBookMark);
 router.post('/api/bookMark/get', bookMarkApi.getBookMarks);
+router.post('/api/bookMark/statics', bookMarkApi.getBookMarksStatics);
 router.post('/api/bookMark/mark', insertLog('mark'), checkArguments(['bookId']), bookMarkApi.markBook);
 router.post('/api/bookMark/update', insertLog('update'), checkArguments(['id']), bookMarkApi.updateBookMarks);
 router.post('/api/bookMark/rate', insertLog('update'), checkArguments(['bookId']), bookMarkApi.rate);

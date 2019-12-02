@@ -10,6 +10,17 @@ const BookMark = require('../models/BookMark');
 const Book = require('../models/Book');
 const RateHistory = require('../models/RateHistory');
 
+async function getBookCoverImages(userId, status) {
+  const result = await BookMark.findAll({
+    where: {enable: true, userId, status: status},
+    attributes: [],
+    limit: 3,
+    order: [['updatedAt', 'desc']],
+    include: [{model: Book, attributes: ['coverImage'], where: {coverImage: {[Op.not]: null}}}]
+  });
+  return result.map(item => item.book.coverImage);
+}
+
 module.exports = {
 
   addBookMark: async (bookMark, loginUser) => {
@@ -45,6 +56,31 @@ module.exports = {
 
   deleteBookMarks: async (ids, loginUser) => {
     return await BookMark.update({enable: false}, {where: {id: {[Op.in]: ids, userId: loginUser.id}}});
+  },
+
+  getBookMarksStatics: async (loginUser) => {
+    const userId = loginUser.id;
+    const unreadCoversPromise = getBookCoverImages(userId, 0);
+    const wantedCoversPromise = getBookCoverImages(userId, 1);
+    const readingCoversPromise = getBookCoverImages(userId, 2);
+    const readCoversPromise = getBookCoverImages(userId, 3);
+    const covers = await Promise.all([unreadCoversPromise, wantedCoversPromise, readingCoversPromise, readCoversPromise]);
+    const countInfo = await BookMark.findAll({
+      where: {userId, enable: true},
+      group: 'status',
+      attributes: ['status', [sequelize.fn('COUNT', 'status'), 'total',]]
+    });
+    const count = [0, 0, 0, 0];
+    countInfo.forEach(info => {
+      const item = info.toJSON();
+      count[item.status] = item.total;
+    });
+    return {
+      unread: {count: count[0], covers: covers[0]},
+      read: {count: count[1], covers: covers[1]},
+      reading: {count: count[2], covers: covers[2]},
+      wanted: {count: count[3], covers: covers[3]}
+    };
   },
 
   getBookMarks: async ({pageIndex = 0, pageSize = 20, keywords = '', status}, loginUser) => {
