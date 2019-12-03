@@ -33,6 +33,7 @@ router.post('/api/user/changePassword', insertLog('changePassword'), checkArgume
 
 router.post('/api/book/add', insertLog('add'), checkArguments(['name']), bookApi.addBook);
 router.post('/api/book/get', bookApi.getBooks);
+router.post('/api/book/search', bookApi.searchBook);
 router.post('/api/book/update', insertLog('update'), checkArguments(['id', 'name']), bookApi.updateBooks);
 router.post('/api/book/delete', insertLog('delete'), checkArguments(['ids']), bookApi.deleteBooks);
 router.post('/api/book/detail', checkArguments(['id']), bookApi.getBookDetail);

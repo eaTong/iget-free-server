@@ -10,6 +10,7 @@ const Book = require('../models/Book');
 const BookMark = require('../models/BookMark');
 const RateHistory = require('../models/RateHistory');
 const BookNote = require('../models/BookNote');
+const {getBookByISDN} = require("../thirdParty/isbn");
 
 module.exports = {
   addBook: async (book) => {
@@ -19,6 +20,33 @@ module.exports = {
 
   updateBooks: async (book) => {
     return await Book.update(book, {where: {id: book.id}})
+  },
+
+  searchBook: async ({keywords}) => {
+    if (/[0-9]{10,13}/.test(keywords)) {
+      const books = await Book.findAll({
+        where: {
+          enable: true, isbn13: {[Op.like]: `%${keywords}%`},
+        },
+        limit: 20
+      });
+      if (books.length > 0) {
+        return books;
+      }
+      const book = await getBookByISDN(keywords);
+      if (book) {
+        const savedBook = await Book.create(book);
+        return [savedBook.dataValues]
+      }
+      return []
+    } else {
+      return await Book.findAll({
+        where: {
+          enable: true, name: {[Op.like]: `%${keywords}%`},
+        },
+        limit: 20
+      });
+    }
   },
 
   deleteBooks: async (ids) => {
@@ -44,8 +72,8 @@ module.exports = {
     const book = await Book.findOne({
       where: {id},
       include: [
-        {model: RateHistory,required: false, order: [['createdAt', 'desc']]},
-        {model: BookNote, required: false,order: [['createdAt', 'desc']], where: {enable: true}}]
+        {model: RateHistory, required: false, order: [['createdAt', 'desc']]},
+        {model: BookNote, required: false, order: [['createdAt', 'desc']], where: {enable: true}}]
     });
     const mark = await BookMark.findOne({where: {bookId: id, userId: loginUser.id}});
     return {...book.dataValues, mark: mark.dataValues};

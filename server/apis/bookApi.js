@@ -10,6 +10,9 @@ module.exports = {
   addBook: async (ctx) => {
     return await bookService.addBook(ctx.request.body);
   },
+  searchBook: async (ctx) => {
+    return await bookService.searchBook(ctx.request.body);
+  },
   updateBooks: async (ctx) => {
     return await bookService.updateBooks(ctx.request.body);
   },
