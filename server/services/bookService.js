@@ -23,7 +23,7 @@ module.exports = {
   },
 
   searchBook: async ({keywords}) => {
-    if (/[0-9]{10,13}/.test(keywords)) {
+    if (/^[0-9]{13}$/.test(keywords)) {
       const books = await Book.findAll({
         where: {
           enable: true, isbn13: {[Op.like]: `%${keywords}%`},
