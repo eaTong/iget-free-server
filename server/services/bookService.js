@@ -76,10 +76,6 @@ module.exports = {
         {model: BookNote, required: false, order: [['createdAt', 'desc']], where: {enable: true}}]
     });
     const mark = await BookMark.findOne({where: {bookId: id, userId: loginUser.id}});
-    const result = {...book.dataValues};
-    if(mark){
-      result.mark = mark.dataValues;
-    }
-    return result;
+    return {...book.dataValues, mark: mark ? mark.dataValues : {}};
   }
 };
