@@ -41,17 +41,17 @@ module.exports.structureData = async (ctx, next) => {
     const data = await next();
     ctx.body = {success: true, data, message: ''};
   } catch (ex) {
-    console.log(ex);
+    const message = typeof ex === 'string' ? ex : ex.message;
     if (ex instanceof ArgMissError) {
       ctx.status = 400;
-      ctx.body = {success: false, data: {}, message: ex.message};
+      ctx.body = {success: false, data: {}, message};
     } else if (ex instanceof LogicError) {
       ctx.status = 200;
-      ctx.body = {success: false, data: {}, message: ex.message};
+      ctx.body = {success: false, data: {}, message};
 
     } else {
       ctx.status = 500;
-      ctx.body = {success: false, data: {}, message: ex.message};
+      ctx.body = {success: false, data: {}, message};
     }
   }
 };
