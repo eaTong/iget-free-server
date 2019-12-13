@@ -4,7 +4,6 @@
 const axios = require("axios");
 const moment = require("moment");
 const {transferImage} = require("./image");
-const {showAPI} = require('../../config/server.config');
 
 function getBookByISDN(isbn) {
   return new Promise(async (resolve, reject) => {
@@ -15,8 +14,9 @@ function getBookByISDN(isbn) {
       if (result.data && result.data.code === 200) {
         const data = result.data.data.msg;
         const coverImage = await transferImage(data.image);
+        const pubdate = /\d{4}-\d+$/.test(data.pubdate) ? `${data.pubdate}-01` : data.pubdate;
         resolve({
-          publishTime: moment(data.pubdate).format('YYYY-MM-DD'),
+          publishTime: moment(pubdate).format('YYYY-MM-DD'),
           coverImage,
           author: data.author.join('、'),
           publisher: data.publisher,
