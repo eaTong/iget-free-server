@@ -14,6 +14,7 @@ function getBookByISDN(isbn) {
     if (result.status === 200) {
       if (result.data && result.data.code === 200) {
         const data = result.data.data.msg;
+        console.log(data);
         const coverImage = await transferImage(data.image);
         resolve({
           publishTime: moment(data.pubdate).format('YYYY-MM-DD'),
