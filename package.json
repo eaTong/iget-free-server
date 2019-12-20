@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eaTong/fully.git"
+    "url": "git+https://github.com/eaTong/iget-free-server.git"
   },
   "keywords": [
     "react",
@@ -30,9 +30,9 @@
   "author": "eaTong",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/eaTong/fully/issues"
+    "url": "https://github.com/eaTong/iget-free-server/issues"
   },
-  "homepage": "http://eatong.cn",
+  "homepage": "http://iget.eatong.cn",
   "dependencies": {
     "ali-oss": "^6.2.1",
     "bulma": "^0.7.5",
