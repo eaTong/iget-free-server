@@ -31,6 +31,11 @@ module.exports = {
       return user;
     }
   },
+  quickLogin: async (ctx) => {
+    const user = await userService.quickLogin(ctx.request.body);
+    ctx.session.loginUser = user;
+    return user;
+  },
   logout: async (ctx) => {
     ctx.session.loginUser = null;
     return void 0;

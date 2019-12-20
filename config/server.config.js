@@ -12,9 +12,6 @@ let config = {
     password: "fully@123",
     database: "fully",
     host: "127.0.0.1"
-  },
-  showAPI:{
-    showapi_appid: '121674',showapi_sign: 'a752f59bab354efe89f5d71face7a03b'
   }
 };
 

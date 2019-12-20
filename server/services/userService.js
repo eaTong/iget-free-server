@@ -46,6 +46,18 @@ module.exports = {
       attributes: ['id', 'name', 'account'],
       where: {account, enable: true, password: md5(password).toString()}
     });
+  },
+  quickLogin: async ({uuid}) => {
+    const user = await User.findOne({
+      attributes: ['id', 'name', 'account'],
+      where: {uuid, enable: true}
+    });
+    if (user) {
+      return user;
+    }
+    const newUser = {uuid,enable:true,name:`用户${uuid.slice(0, 7)}`};
+
+    return await User.create(newUser);
   }
 };
 

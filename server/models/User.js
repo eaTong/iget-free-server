@@ -8,6 +8,7 @@ const User = sequelize.define('user', {
   account: {type: Sequelize.STRING, unique: true},
   password: Sequelize.STRING,
   name: Sequelize.STRING,
+  uuid: Sequelize.STRING,
   enable: Sequelize.BOOLEAN,
 });
 
