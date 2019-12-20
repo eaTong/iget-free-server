@@ -72,8 +72,17 @@ module.exports = {
     const book = await Book.findOne({
       where: {id},
       include: [
-        {model: RateHistory, required: false, order: [['createdAt', 'desc']]},
-        {model: BookNote, required: false, order: [['createdAt', 'desc']], where: {enable: true}}]
+        {
+          model: RateHistory,
+          required: false,
+          where: {userId: loginUser.id}
+        },
+        {
+          model: BookNote,
+          required: false,
+          where: {enable: true, userId: loginUser.id}
+        }],
+      order: [[RateHistory, 'createdAt', 'desc'], [BookNote, 'createdAt', 'desc']],
     });
     const mark = await BookMark.findOne({where: {bookId: id, userId: loginUser.id}});
     return {...book.dataValues, mark: mark ? mark.dataValues : {}};

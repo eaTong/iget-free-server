@@ -1,9 +1,9 @@
 /**
  * created by eaTong at 2019/12/3
  */
-const {searchBook} = require("../../server/services/bookService");
+const {getBookDetail} = require("../../server/services/bookService");
 
 (async () => {
-  const result = await searchBook({keywords:'9787547251751'});
+  const result = await getBookDetail({id: 6}, {id: 1});
   console.log(result);
 })();

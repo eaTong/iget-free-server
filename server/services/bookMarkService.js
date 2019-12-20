@@ -65,13 +65,14 @@ module.exports = {
     const wantedCoversPromise = getBookCoverImages(userId, 1);
     const readingCoversPromise = getBookCoverImages(userId, 2);
     const readCoversPromise = getBookCoverImages(userId, 3);
-    const covers = await Promise.all([wantedCoversPromise, readingCoversPromise, readCoversPromise]);
+    const listenedCoversPromise = getBookCoverImages(userId, 4);
+    const covers = await Promise.all([wantedCoversPromise, readingCoversPromise, readCoversPromise, listenedCoversPromise]);
     const countInfo = await BookMark.findAll({
       where: {userId, enable: true},
       group: 'status',
       attributes: ['status', [sequelize.fn('COUNT', 'status'), 'total',]]
     });
-    const count = [0, 0, 0, 0];
+    const count = [0, 0, 0, 0, 0];
     countInfo.forEach(info => {
       const item = info.toJSON();
       count[item.status] = item.total;
@@ -80,6 +81,7 @@ module.exports = {
       wanted: {count: count[1], covers: covers[0]},
       reading: {count: count[2], covers: covers[1]},
       read: {count: count[3], covers: covers[2]},
+      listened: {count: count[4], covers: covers[3]},
     };
   },
 
