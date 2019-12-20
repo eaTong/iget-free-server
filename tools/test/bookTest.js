@@ -4,6 +4,6 @@
 const {searchBook} = require("../../server/services/bookService");
 
 (async () => {
-  const result = await searchBook({keywords:'万万'});
+  const result = await searchBook({keywords:'9787547251751'});
   console.log(result);
 })();

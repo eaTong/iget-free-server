@@ -16,7 +16,7 @@ function getBookByISDN(isbn) {
         const coverImage = await transferImage(data.image);
         const pubdate = /\d{4}-\d+$/.test(data.pubdate) ? `${data.pubdate}-01` : data.pubdate;
         resolve({
-          publishTime: moment(pubdate).format('YYYY-MM-DD'),
+          publishTime: moment(pubdate|| new Date()).format('YYYY-MM-DD'),
           coverImage,
           author: data.author.join('、'),
           publisher: data.publisher,
@@ -26,7 +26,7 @@ function getBookByISDN(isbn) {
           name: data.title,
           subTitle: data.subtitle,
           letterCount: 0,
-          pages: data.pages,
+          pages: data.pages ||0,
           summary: data.summary,
         });
       } else {
