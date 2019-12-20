@@ -9,7 +9,7 @@ const User = require('./User');
 const Book = require('./Book');
 
 const BookMark = sequelize.define('bookMark', {
-  status: {type: Sequelize.INTEGER, comment: '0：未读，1：想读，2：在读，3：已读完'},
+  status: {type: Sequelize.INTEGER, comment: '0：未读，1：想读，2：在读，3：已读完,4：已听'},
   rate: {type: Sequelize.INTEGER, comment: '评分'},
   finishTime: {type: Sequelize.DATE, comment: '读完日期'},
   enable: Sequelize.BOOLEAN,

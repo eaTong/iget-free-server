@@ -4,6 +4,7 @@
  */
 
 const {Op} = require('sequelize');
+const moment = require('moment');
 const sequelize = require('../framework/database');
 const {LogicError} = require('../framework/errors');
 const BookMark = require('../models/BookMark');
@@ -32,7 +33,7 @@ module.exports = {
     const mark = await BookMark.findOne({where: {bookId: data.bookId, userId: loginUser.id}});
     if (mark) {
       mark.status = data.status;
-      mark.finishTime = data.finishTime;
+      mark.finishTime = (data.status === 3 || data.status === 4 && !data.finishTime) ? moment().format('YYYY-MM-DD HH:mm:SS') : data.finishTime;
       await mark.save();
       return {isNew: false};
     }

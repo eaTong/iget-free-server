@@ -4,7 +4,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Icon, List, Popover} from "antd";
-import {bookMarkStatus} from "../../bothSide/enums";
 
 const ListItem = List.Item;
 
