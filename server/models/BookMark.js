@@ -13,6 +13,7 @@ const BookMark = sequelize.define('bookMark', {
   listenedStatus: {type: Sequelize.INTEGER, comment: '0：未听，1：已听'},
   rate: {type: Sequelize.INTEGER, comment: '评分'},
   finishTime: {type: Sequelize.DATE, comment: '读完日期'},
+  finishListeningTime: {type: Sequelize.DATE, comment: '听完日期'},
   enable: Sequelize.BOOLEAN,
 });
 

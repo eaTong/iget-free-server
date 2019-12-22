@@ -46,7 +46,8 @@ module.exports = {
       mark.status = data.status;
       mark.listenedStatus = data.listenedStatus;
       mark.finishTime = (data.status === 3  && !data.finishTime) ? moment().format('YYYY-MM-DD HH:mm:SS') : data.finishTime;
-      await mark.save();
+      mark.finishListeningTime = (data.listenedStatus === 1  && !data.finishListeningTime) ? moment().format('YYYY-MM-DD HH:mm:SS') : data.finishListeningTime;
+     await mark.save();
       return { isNew: false };
     }
     const bookMark = {
