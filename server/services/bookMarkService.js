@@ -44,7 +44,8 @@ module.exports = {
     const mark = await BookMark.findOne({ where: { bookId: data.bookId, userId: loginUser.id } });
     if (mark) {
       mark.status = data.status;
-      mark.finishTime = (data.status === 3 || data.status === 4 && !data.finishTime) ? moment().format('YYYY-MM-DD HH:mm:SS') : data.finishTime;
+      mark.listenedStatus = data.listenedStatus;
+      mark.finishTime = (data.status === 3  && !data.finishTime) ? moment().format('YYYY-MM-DD HH:mm:SS') : data.finishTime;
       await mark.save();
       return { isNew: false };
     }

@@ -3,10 +3,10 @@
  */
 
 const bookMarkStatus = [
-  '未读', '想读', '在读', '已读',
+  '未读', '想读', '在读', '已读完',
 ];
 const bookMarkListenedStatus = [
-  '未听', '已听',
+  '未听', '已听完',
 ];
 const bookMarkStatusOptions = bookMarkStatus.map((status, index) => ({label: status, value: String(index)}));
 
