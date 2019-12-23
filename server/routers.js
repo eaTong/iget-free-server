@@ -19,8 +19,11 @@ const router = new Router();
 router.post('/api/*', checkLogin);
 router.post('/api/*', structureData);
 
-router.post('/api/user/login', insertLog('login'), checkArguments(['account', 'password']), userApi.login);
-router.post('/api/pub/quickLogin', insertLog('login'),  userApi.quickLogin);
+router.post('/api/user/login', insertLog('login', data => ({
+  ...data,
+  password: undefined
+})), checkArguments(['account', 'password']), userApi.login);
+router.post('/api/pub/quickLogin', insertLog('login'), userApi.quickLogin);
 router.post('/api/image/upload', fileApi.uploadImage);
 router.post('/api/file/upload', fileApi.uploadFile);
 router.post('/api/menu/get', menuApi.getMenus);
@@ -52,7 +55,7 @@ router.post('/api/bookNote/add', insertLog('add'), checkArguments(['bookId']), b
 router.post('/api/bookNote/get', bookNoteApi.getBookNotes);
 router.post('/api/bookNote/update', insertLog('update'), checkArguments(['id',]), bookNoteApi.updateBookNotes);
 router.post('/api/bookNote/delete', insertLog('delete'), checkArguments(['ids']), bookNoteApi.deleteBookNotes);
-router.post('/api/bookNote/detail',  checkArguments(['id']), bookNoteApi.getBookNoteDetail);
+router.post('/api/bookNote/detail', checkArguments(['id']), bookNoteApi.getBookNoteDetail);
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {

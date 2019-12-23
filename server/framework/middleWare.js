@@ -56,11 +56,11 @@ module.exports.structureData = async (ctx, next) => {
   }
 };
 
-module.exports.insertLog = (type) => {
+module.exports.insertLog = (type, dataResolve) => {
   return async (ctx, next) => {
     const operator = ctx.session.loginUser ? ctx.session.loginUser.id : 0,
       url = ctx.originalUrl,
-      req = JSON.stringify(ctx.request.body);
+      req = JSON.stringify(dataResolve ? dataResolve(ctx.request.body) : ctx.request.body);
     await logService.insertLog({operator, req, type, url});
     return await next();
   }
