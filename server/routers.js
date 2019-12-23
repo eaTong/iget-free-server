@@ -24,6 +24,7 @@ router.post('/api/user/login', insertLog('login', data => ({
   password: undefined
 })), checkArguments(['account', 'password']), userApi.login);
 router.post('/api/pub/quickLogin', insertLog('login'), userApi.quickLogin);
+router.post('/api/pub/logout', userApi.logout);
 router.post('/api/image/upload', fileApi.uploadImage);
 router.post('/api/file/upload', fileApi.uploadFile);
 router.post('/api/menu/get', menuApi.getMenus);
