@@ -20,7 +20,7 @@ module.exports = {
   changePassword: async (ctx) => {
     const formData = ctx.request.body;
     formData.account = ctx.session.loginUser.account;
-    return await userService.changePassword(formData);
+    return await userService.changePassword(formData, ctx.session.loginUser);
   },
   login: async (ctx) => {
     const user = await userService.login(ctx.request.body);

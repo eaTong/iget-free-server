@@ -51,6 +51,7 @@ module.exports.structureData = async (ctx, next) => {
 
     } else {
       ctx.status = 500;
+      console.error(message, ex);
       ctx.body = {success: false, data: {}, message};
     }
   }

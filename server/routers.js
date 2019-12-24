@@ -32,9 +32,9 @@ router.post('/api/menu/authorised', menuApi.getAuthorisedMenu);
 
 router.post('/api/user/add', insertLog('add'), checkArguments(['account', 'name']), userApi.addUser);
 router.post('/api/user/get', userApi.getUsers);
-router.post('/api/user/update', insertLog('update'), checkArguments(['id', 'account', 'name']), userApi.updateUsers);
+router.post('/api/user/update', insertLog('update'), checkArguments(['id',]), userApi.updateUsers);
 router.post('/api/user/delete', insertLog('delete'), checkArguments(['ids']), userApi.deleteUsers);
-router.post('/api/user/changePassword', insertLog('changePassword'), checkArguments(['password', 'originPassword']), userApi.changePassword);
+router.post('/api/user/changePassword', insertLog('changePassword'), checkArguments(['password']), userApi.changePassword);
 
 router.post('/api/book/add', insertLog('add'), checkArguments(['name']), bookApi.addBook);
 router.post('/api/book/get', bookApi.getBooks);
