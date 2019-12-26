@@ -23,6 +23,9 @@ module.exports = {
         throw new LogicError(`账号(${data.account})已存在`);
       }
     }
+    if (data.password) {
+      data.password = md5(data.password).toString();
+    }
     return await User.update(data, {where: {id: data.id}})
   },
   deleteUsers: async (ids) => {
@@ -62,5 +65,4 @@ module.exports = {
     return await User.create(newUser);
   }
 };
-
 
