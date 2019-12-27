@@ -14,6 +14,7 @@ const sequelize = new Sequelize(mysql.database, mysql.user, mysql.password, {
     acquire: 30000,
     idle: 10000
   },
+  timezone: '+08:00'
 });
 
 module.exports = sequelize;

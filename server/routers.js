@@ -12,6 +12,7 @@ const menuApi = require('./apis/menuApi');
 const bookApi = require('./apis/bookApi');
 const bookMarkApi = require('./apis/bookMarkApi');
 const bookNoteApi = require('./apis/bookNoteApi');
+const teamApi = require('./apis/teamApi');
 //UPDATE_TAG:importApi
 
 const router = new Router();
@@ -57,6 +58,12 @@ router.post('/api/bookNote/get', bookNoteApi.getBookNotes);
 router.post('/api/bookNote/update', insertLog('update'), checkArguments(['id',]), bookNoteApi.updateBookNotes);
 router.post('/api/bookNote/delete', insertLog('delete'), checkArguments(['ids']), bookNoteApi.deleteBookNotes);
 router.post('/api/bookNote/detail', checkArguments(['id']), bookNoteApi.getBookNoteDetail);
+
+router.post('/api/team/add', insertLog('add'), checkArguments(['name']), teamApi.addTeam);
+router.post('/api/team/get', teamApi.getTeams);
+router.post('/api/team/update', insertLog('update'), checkArguments(['id', 'name']), teamApi.updateTeams);
+router.post('/api/team/delete', insertLog('delete'), checkArguments(['ids']), teamApi.deleteTeams);
+router.post('/api/team/detail',  checkArguments(['id']), teamApi.getTeamDetail);
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {

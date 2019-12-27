@@ -7,6 +7,7 @@ import UserStore from "~/stores/UserStore";
 import BookStore from './BookStore';
 import BookMarkStore from './BookMarkStore';
 import BookNoteStore from './BookNoteStore';
+import TeamStore from './TeamStore';
 //UPDATE_TAG:importStore
 
 export default {
@@ -15,5 +16,6 @@ export default {
 book: new BookStore(),
 bookMark: new BookMarkStore(),
 bookNote: new BookNoteStore(),
+team: new TeamStore(),
 //UPDATE_TAG:registerStore
 }
