@@ -20,6 +20,18 @@ module.exports = {
     const loginUser = ctx.session.loginUser;
     return await teamService.deleteTeams(ctx.request.body.ids,loginUser);
   },
+  joinTeam: async (ctx) => {
+    const loginUser = ctx.session.loginUser;
+    return await teamService.joinTeam(ctx.request.body,loginUser);
+  },
+  quitTeam: async (ctx) => {
+    const loginUser = ctx.session.loginUser;
+    return await teamService.quitTeam(ctx.request.body,loginUser);
+  },
+  deleteTeamMember: async (ctx) => {
+    const loginUser = ctx.session.loginUser;
+    return await teamService.deleteTeamMember(ctx.request.body,loginUser);
+  },
   getTeams: async (ctx) => {
     const loginUser = ctx.session.loginUser;
     return await teamService.getTeams(ctx.request.body,loginUser);
@@ -29,4 +41,3 @@ module.exports = {
     return await teamService.getTeamDetail(ctx.request.body,loginUser);
   }
 };
-  

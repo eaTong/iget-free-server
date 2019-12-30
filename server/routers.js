@@ -63,7 +63,10 @@ router.post('/api/team/add', insertLog('add'), checkArguments(['name']), teamApi
 router.post('/api/team/get', teamApi.getTeams);
 router.post('/api/team/update', insertLog('update'), checkArguments(['id', 'name']), teamApi.updateTeams);
 router.post('/api/team/delete', insertLog('delete'), checkArguments(['ids']), teamApi.deleteTeams);
-router.post('/api/team/detail',  checkArguments(['id']), teamApi.getTeamDetail);
+router.post('/api/team/join', insertLog('join'), checkArguments(['teamId']), teamApi.joinTeam);
+router.post('/api/team/quit', insertLog('quit'), checkArguments(['teamId']), teamApi.quitTeam());
+router.post('/api/team/deleteMember', insertLog('deleteMember'), checkArguments(['teamId']), teamApi.deleteTeamMember);
+router.post('/api/team/detail', checkArguments(['id']), teamApi.getTeamDetail);
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {
