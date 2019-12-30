@@ -19,5 +19,5 @@ BookNote.belongsTo(User);
 User.hasMany(BookNote);
 BookNote.belongsTo(Book);
 Book.hasMany(BookNote);
-module.exports = BookNote;
+
 module.exports = BookNote;
