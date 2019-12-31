@@ -63,13 +63,13 @@ module.exports = {
       where: {enable: true, name: {[Op.like]: `%${keywords}%`}},
       include: [{model: User, where: {id: loginUser.id}}]
     };
-    const {dataValues: {total}} = await Team.findOne({
+    const totalValue = await Team.findOne({
       ...option,
       attributes: [[sequelize.fn('COUNT', '*'), 'total']],
       group: Team.id
     });
     const list = await Team.findAll({offset: pageIndex * pageSize, limit: pageSize, ...option});
-    return {total, list}
+    return {total: totalValue ? totalValue.dataValues : 0, list}
   },
 
   getTeamDetail: async ({id}, loginUser) => {
