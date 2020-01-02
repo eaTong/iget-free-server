@@ -15,11 +15,14 @@ module.exports = {
   addTeam: async (team, loginUser) => {
     team.enable = true;
     team = await Team.create(team);
+    team.creator = loginUser.id;
+    team.needPassword = !!team.password;
     await TeamUser.create({userId: loginUser.id, teamId: team.id, isOwner: true});
     return team;
   },
 
   updateTeams: async (team, loginUser) => {
+    team.needPassword = !!team.password;
     return await Team.update(team, {where: {id: team.id,}})
   },
 
@@ -61,7 +64,10 @@ module.exports = {
   getTeams: async ({pageIndex = 0, pageSize = 20, keywords = ''}, loginUser) => {
     const option = {
       where: {enable: true, name: {[Op.like]: `%${keywords}%`}},
-      include: [{model: User, where: {id: loginUser.id}}]
+      attributes: ['id', 'name', 'description', 'creator', 'needPassword'],
+      include: [
+        {model: User, where: {id: loginUser.id}, attributes: ['id', 'name', 'account']},
+      ]
     };
     const totalValue = await Team.findOne({
       ...option,
@@ -69,7 +75,18 @@ module.exports = {
       group: Team.id
     });
     const list = await Team.findAll({offset: pageIndex * pageSize, limit: pageSize, ...option});
-    return {total: totalValue ? totalValue.dataValues : 0, list}
+
+    return {
+      total: totalValue ? totalValue.dataValues.total : 0,
+      list: JSON.parse(JSON.stringify(list)).map(team => (
+        {
+          ...team,
+          creator: team.users.find(user => user.id === team.creator),
+          userCount: team.users.length,
+          users: undefined
+        }
+      ))
+    }
   },
 
   getTeamDetail: async ({id}, loginUser) => {

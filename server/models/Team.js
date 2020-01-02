@@ -16,14 +16,13 @@ const Team = sequelize.define('team', {
     type: Sequelize.UUID,
     defaultValue: uuid()
   },
+  creator: {type: Sequelize.INTEGER, comments: '创建人ID'},
   name: {type: Sequelize.STRING, comments: '团队名称'},
-  unionKey:{type:Sequelize.STRING , comments:'团队'},
   description: {type: Sequelize.STRING, comments: '描述'},
   needPassword: {type: Sequelize.BOOLEAN, comments: '加入是否需要密码'},
   password: {type: Sequelize.STRING, comments: '加入密码'},
   enable: Sequelize.BOOLEAN,
 });
-
 Team.belongsToMany(User, {through: TeamUser});
 User.belongsToMany(Team, {through: TeamUser});
 
