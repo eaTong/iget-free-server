@@ -64,7 +64,7 @@ nextServer.prepare()
     app.use(cors({
       origin: function (ctx) {
         const origin = ctx.req.headers.origin;
-        if (/localhost/.test(origin)) {
+        if (/localhost/.test(origin) || /192\.168\.\d+\.\d+/) {
           return origin;
         }
       },

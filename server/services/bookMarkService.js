@@ -99,13 +99,13 @@ module.exports = {
     };
   },
 
-  getBookMarks: async ({ pageIndex = 0, pageSize = 20, keywords = '', status, listenedCount ,order='createdAt'}, loginUser) => {
+  getBookMarks: async ({ pageIndex = 0, pageSize = 20, keywords = '', status, listenedStatus ,order='createdAt'}, loginUser) => {
     const option = { where: { enable: true, userId: loginUser.id } };
     if (status > -1) {
       option.where.status = status;
     }
-    if (listenedCount > -1) {
-      option.where.listenedCount = listenedCount;
+    if (listenedStatus > -1) {
+      option.where.listenedStatus = listenedStatus;
     }
     const { dataValues: { total } } = await BookMark.findOne({
       ...option,
