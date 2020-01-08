@@ -61,7 +61,8 @@ module.exports = {
     return await TeamUser.destroy({where: {teamId, userId}});
   },
 
-  getTeams: async ({pageIndex = 0, pageSize = 20, keywords = ''}, loginUser) => {
+  getTeams: async ({pageIndex = 0, pageSize = 20, keywords = '', status = -1}, loginUser) => {
+
     const option = {
       where: {enable: true, name: {[Op.like]: `%${keywords}%`}},
       attributes: ['id', 'name', 'description', 'creator', 'needPassword'],
@@ -69,6 +70,12 @@ module.exports = {
         {model: User, where: {id: loginUser.id}, attributes: ['id', 'name', 'account']},
       ]
     };
+    if (status === 1) {
+      option.where.creator = loginUser.id;
+    }
+    if (status === 0) {
+      option.where.creator = {[Op.not]: loginUser.id}
+    }
     const totalValue = await Team.findOne({
       ...option,
       attributes: [[sequelize.fn('COUNT', '*'), 'total']],
