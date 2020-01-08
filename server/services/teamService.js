@@ -70,9 +70,11 @@ module.exports = {
         {model: User, where: {id: loginUser.id}, attributes: ['id', 'name', 'account']},
       ]
     };
+    // status = 1 all I created
     if (status === 1) {
       option.where.creator = loginUser.id;
     }
+    // status = 0 creator is not me
     if (status === 0) {
       option.where.creator = {[Op.not]: loginUser.id}
     }
