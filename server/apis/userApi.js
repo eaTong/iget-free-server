@@ -6,21 +6,21 @@ const userService = require('../services/userService');
 
 module.exports = {
   addUser: async (ctx) => {
-    return await userService.addUser(ctx.request.body);
+    return userService.addUser(ctx.request.body);
   },
   updateUsers: async (ctx) => {
-    return await userService.updateUsers(ctx.request.body);
+    return userService.updateUsers(ctx.request.body);
   },
   deleteUsers: async (ctx) => {
-    return await userService.deleteUsers(ctx.request.body.ids);
+    return userService.deleteUsers(ctx.request.body.ids);
   },
   getUsers: async (ctx) => {
-    return await userService.getUsers(ctx.request.body);
+    return userService.getUsers(ctx.request.body);
   },
   changePassword: async (ctx) => {
     const formData = ctx.request.body;
     formData.account = ctx.session.loginUser.account;
-    return await userService.changePassword(formData, ctx.session.loginUser);
+    return userService.changePassword(formData, ctx.session.loginUser);
   },
   login: async (ctx) => {
     const user = await userService.login(ctx.request.body);

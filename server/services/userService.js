@@ -14,7 +14,7 @@ module.exports = {
     }
     user.password = md5(user.password).toString();
     user.enable = true;
-    return await User.create(user);
+    return User.create(user);
   },
   updateUsers: async (data) => {
     if (data.hasOwnProperty('account')) {
@@ -26,13 +26,13 @@ module.exports = {
     if (data.password) {
       data.password = md5(data.password).toString();
     }
-    return await User.update(data, {where: {id: data.id}})
+    return User.update(data, {where: {id: data.id}})
   },
   deleteUsers: async (ids) => {
-    return await User.update({enable: false}, {where: {id: {[Op.in]: ids}}});
+    return User.update({enable: false}, {where: {id: {[Op.in]: ids}}});
   },
   getUsers: async () => {
-    return await User.findAll({attributes: ['id', 'name', 'account'], where: {enable: true}});
+    return User.findAll({attributes: ['id', 'name', 'account'], where: {enable: true}});
   },
   changePassword: async ({password, originPassword, id, uuid}, loginUser) => {
     const user = await User.findOne({
@@ -44,7 +44,7 @@ module.exports = {
       throw new LogicError('当前用户未设置密码，且非本人操作，无法修改密码！');
     }
     user.password = md5(password).toString();
-    return await user.save();
+    return user.save();
   },
   login: async ({account, password}) => {
     const user = await User.findOne({
@@ -62,7 +62,7 @@ module.exports = {
       return {...user.dataValues, hasPassword: true};
     }
     const newUser = {uuid, enable: true, name: `用户${uuid.slice(0, 7)}`};
-    return await User.create(newUser);
+    return User.create(newUser);
   }
 };
 

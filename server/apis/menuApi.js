@@ -5,10 +5,10 @@ const menuService = require('../services/menuService');
 
 module.exports = {
   getMenus: async (ctx) => {
-    return await menuService.getMenus();
+    return menuService.getMenus();
   },
   getAuthorisedMenu: async (ctx) => {
-    return await
+    return
       menuService.getAuthorisedMenu(ctx.session.loginUser.id);
   }
 };

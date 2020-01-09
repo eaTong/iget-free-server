@@ -13,15 +13,15 @@ module.exports = {
   addBookNote: async (bookNote, loginUser) => {
     bookNote.enable = true;
     bookNote.userId = loginUser.id;
-    return await BookNote.create(bookNote);
+    return BookNote.create(bookNote);
   },
 
   updateBookNotes: async (bookNote, loginUser) => {
-    return await BookNote.update(bookNote, {where: {id: bookNote.id, userId: loginUser.id}})
+    return BookNote.update(bookNote, {where: {id: bookNote.id, userId: loginUser.id}})
   },
 
   deleteBookNotes: async (ids, loginUser) => {
-    return await BookNote.update({enable: false}, {where: {id: {[Op.in]: ids}, userId: loginUser.id}});
+    return BookNote.update({enable: false}, {where: {id: {[Op.in]: ids}, userId: loginUser.id}});
   },
 
   getBookNotes: async ({pageIndex = 0, pageSize = 20, keywords = ''}, loginUser) => {
@@ -54,6 +54,6 @@ module.exports = {
   },
 
   getBookNoteDetail: async ({id}, loginUser) => {
-    return await BookNote.findOne({where: {id, userId: loginUser.id}});
+    return BookNote.findOne({where: {id, userId: loginUser.id}});
   }
 };

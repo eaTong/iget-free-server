@@ -21,7 +21,7 @@ module.exports.checkArguments = (args) => {
         }
       }
     }
-    return await next();
+    return next();
   }
 };
 
@@ -33,7 +33,7 @@ module.exports.checkLogin = async (ctx, next) => {
       return;
     }
   }
-  return await next();
+  return next();
 };
 
 module.exports.structureData = async (ctx, next) => {
@@ -63,6 +63,6 @@ module.exports.insertLog = (type, dataResolve) => {
       url = ctx.originalUrl,
       req = JSON.stringify(dataResolve ? dataResolve(ctx.request.body) : ctx.request.body);
     await logService.insertLog({operator, req, type, url});
-    return await next();
+    return next();
   }
 };

@@ -8,23 +8,23 @@ const bookService = require('../services/bookService');
 
 module.exports = {
   addBook: async (ctx) => {
-    return await bookService.addBook(ctx.request.body);
+    return bookService.addBook(ctx.request.body);
   },
   searchBook: async (ctx) => {
-    return await bookService.searchBook(ctx.request.body);
+    return bookService.searchBook(ctx.request.body);
   },
   updateBooks: async (ctx) => {
-    return await bookService.updateBooks(ctx.request.body);
+    return bookService.updateBooks(ctx.request.body);
   },
   deleteBooks: async (ctx) => {
-    return await bookService.deleteBooks(ctx.request.body.ids);
+    return bookService.deleteBooks(ctx.request.body.ids);
   },
   getBooks: async (ctx) => {
     const loginUser = ctx.session.loginUser;
-    return await bookService.getBooks(ctx.request.body, loginUser);
+    return bookService.getBooks(ctx.request.body, loginUser);
   },
   getBookDetail: async (ctx) => {
     const loginUser = ctx.session.loginUser;
-    return await bookService.getBookDetail(ctx.request.body, loginUser);
+    return bookService.getBookDetail(ctx.request.body, loginUser);
   }
 };

@@ -38,7 +38,7 @@ module.exports = {
   addBookMark: async (bookMark, loginUser) => {
     bookMark.enable = true;
     bookMark.userId = loginUser.id;
-    return await BookMark.create(bookMark);
+    return BookMark.create(bookMark);
   },
   markBook: async (data, loginUser) => {
     const mark = await BookMark.findOne({ where: { bookId: data.bookId, userId: loginUser.id } });
@@ -61,15 +61,15 @@ module.exports = {
 
   rate: async (rate, loginUser) => {
     await RateHistory.create({ ...rate, userId: loginUser.id });
-    return await BookMark.update(rate, { where: { bookId: rate.bookId, userId: loginUser.id } })
+    return BookMark.update(rate, { where: { bookId: rate.bookId, userId: loginUser.id } })
   },
 
   updateBookMarks: async (bookMark, loginUser) => {
-    return await BookMark.update(bookMark, { where: { id: bookMark.id, userId: loginUser.id } })
+    return BookMark.update(bookMark, { where: { id: bookMark.id, userId: loginUser.id } })
   },
 
   deleteBookMarks: async (ids, loginUser) => {
-    return await BookMark.update({ enable: false }, { where: { id: { [Op.in]: ids, userId: loginUser.id } } });
+    return BookMark.update({ enable: false }, { where: { id: { [Op.in]: ids, userId: loginUser.id } } });
   },
 
   getBookMarksStatics: async (loginUser) => {
@@ -121,6 +121,6 @@ module.exports = {
   },
 
   getBookMarkDetail: async ({ id }, loginUser) => {
-    return await BookMark.findOne({ where: { id, userId: loginUser.id } });
+    return BookMark.findOne({ where: { id, userId: loginUser.id } });
   }
 };

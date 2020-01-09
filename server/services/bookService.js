@@ -15,11 +15,11 @@ const {getBookByISDN} = require("../thirdParty/isbn");
 module.exports = {
   addBook: async (book) => {
     book.enable = true;
-    return await Book.create(book);
+    return Book.create(book);
   },
 
   updateBooks: async (book) => {
-    return await Book.update(book, {where: {id: book.id}})
+    return Book.update(book, {where: {id: book.id}})
   },
 
   searchBook: async ({keywords}) => {
@@ -40,7 +40,7 @@ module.exports = {
       }
       return []
     } else {
-      return await Book.findAll({
+      return Book.findAll({
         where: {
           enable: true, name: {[Op.like]: `%${keywords}%`},
         },
@@ -50,7 +50,7 @@ module.exports = {
   },
 
   deleteBooks: async (ids) => {
-    return await Book.update({enable: false}, {where: {id: {[Op.in]: ids}}});
+    return Book.update({enable: false}, {where: {id: {[Op.in]: ids}}});
   },
 
   getBooks: async ({pageIndex = 0, pageSize = 20, keywords = ''}, loginUser) => {
