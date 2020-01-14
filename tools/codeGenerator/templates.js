@@ -29,23 +29,23 @@ const ${form}Service = require('../services/${form}Service');
 module.exports = {
   add${upperFirstLetter(form)}: async (ctx) => {
     const loginUser = ctx.session.loginUser;
-    return await ${form}Service.add${upperFirstLetter(form)}(ctx.request.body,loginUser);
+    return ${form}Service.add${upperFirstLetter(form)}(ctx.request.body,loginUser);
   },
   update${upperFirstLetter(form)}s: async (ctx) => {
     const loginUser = ctx.session.loginUser;
-    return await ${form}Service.update${upperFirstLetter(form)}s(ctx.request.body,loginUser);
+    return ${form}Service.update${upperFirstLetter(form)}s(ctx.request.body,loginUser);
   },
   delete${upperFirstLetter(form)}s: async (ctx) => {
     const loginUser = ctx.session.loginUser;
-    return await ${form}Service.delete${upperFirstLetter(form)}s(ctx.request.body.ids,loginUser);
+    return ${form}Service.delete${upperFirstLetter(form)}s(ctx.request.body.ids,loginUser);
   },
   get${upperFirstLetter(form)}s: async (ctx) => {
     const loginUser = ctx.session.loginUser;
-    return await ${form}Service.get${upperFirstLetter(form)}s(ctx.request.body,loginUser);
+    return ${form}Service.get${upperFirstLetter(form)}s(ctx.request.body,loginUser);
   },
   get${upperFirstLetter(form)}Detail: async (ctx) => {
     const loginUser = ctx.session.loginUser;
-    return await ${form}Service.get${upperFirstLetter(form)}Detail(ctx.request.body,loginUser);
+    return ${form}Service.get${upperFirstLetter(form)}Detail(ctx.request.body,loginUser);
   }
 };
   `;
@@ -62,20 +62,20 @@ module.exports = {
   add${upperFirstLetter(form)}: async (${form},loginUser) => {
     ${form}.enable = true;
     ${form}.userId = loginUser.id;
-   
-    return await ${upperFirstLetter(form)}.create(${form});
+
+    return ${upperFirstLetter(form)}.create(${form});
   },
 
   update${upperFirstLetter(form)}s: async (${form},loginUser) => {
-    return await ${upperFirstLetter(form)}.update(${form}, {where: {id: ${form}.id,userId:loginUser.id}})
+    return ${upperFirstLetter(form)}.update(${form}, {where: {id: ${form}.id,userId:loginUser.id}})
   },
 
   delete${upperFirstLetter(form)}s: async (ids,loginUser) => {
-    return await ${upperFirstLetter(form)}.update({enable: false}, {where: {id: {[Op.in]: ids},userId:loginUser.id}});
+    return ${upperFirstLetter(form)}.update({enable: false}, {where: {id: {[Op.in]: ids},userId:loginUser.id}});
   },
 
   get${upperFirstLetter(form)}s: async ({pageIndex = 0, pageSize = 20, keywords = ''},loginUser) => {
-    const option = {where: {enable: true,userId:loginUser.id, name: {[Op.like]: \`\%\${keywords}%\`}}}; 
+    const option = {where: {enable: true,userId:loginUser.id, name: {[Op.like]: \`\%\${keywords}%\`}}};
     const {dataValues: {total}} = await ${upperFirstLetter(form)}.findOne({
       ...option,
       attributes: [[sequelize.fn('COUNT', '*'), 'total']]
@@ -85,9 +85,9 @@ module.exports = {
   },
 
   get${upperFirstLetter(form)}Detail: async ({id},loginUser) => {
-    return await ${upperFirstLetter(form)}.findOne({where: {id,userId:loginUser.id}});
+    return ${upperFirstLetter(form)}.findOne({where: {id,userId:loginUser.id}});
   }
-}; 
+};
   `;
 };
 
@@ -100,7 +100,7 @@ module.exports.getDefineRouter = function (form) {
 router.post('/api/${form}/add', insertLog('add'), checkArguments(['name']), ${form}Api.add${upperFirstLetter(form)});
 router.post('/api/${form}/get', ${form}Api.get${upperFirstLetter(form)}s);
 router.post('/api/${form}/update', insertLog('update'), checkArguments(['id', 'name']), ${form}Api.update${upperFirstLetter(form)}s);
-router.post('/api/${form}/delete', insertLog('delete'), checkArguments(['ids']), ${form}Api.delete${upperFirstLetter(form)}s);  
+router.post('/api/${form}/delete', insertLog('delete'), checkArguments(['ids']), ${form}Api.delete${upperFirstLetter(form)}s);
 router.post('/api/${form}/detail',  checkArguments(['id']), ${form}Api.get${upperFirstLetter(form)}Detail); \
 `
 };
@@ -114,7 +114,7 @@ module.exports.getAsyncModel = function (form) {
 };
 
 module.exports.getAsyncMenu = function (form) {
-  return ` 
+  return `
     {name: '${form}', icon: 'file', path: '/admin/${form}', enable: true, parentPath: '',type:1},
   `;
 };
@@ -152,7 +152,7 @@ class ${upperFirstLetter(form)}Page extends PageBase {
             placeholder={'输入关键字搜索'}
             onSearch={(val) => ${form}.searchData(val)}
           />
-          
+
           <ButtonGroup className="buttons">
             <Button
               onClick={() => this.props.${form}.toggleFormModal('add')}
@@ -275,7 +275,7 @@ export default class ${upperFirstLetter(form)}Store extends BaseStore {
   updateApi = '/api/${form}/update';
   deleteApi = '/api/${form}/delete';
   detailApi = '/api/${form}/detail';
-  
+
   @action
   async searchData(keywords) {
     this.queryOption = {keywords};

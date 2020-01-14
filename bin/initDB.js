@@ -10,6 +10,7 @@ const RateHistory = require('../server/models/RateHistory');
 const BookNote = require('../server/models/BookNote');
 const Team = require('../server/models/Team');
 const TeamUser = require('../server/models/TeamUser');
+const Objective = require('../server/models/Objective');
 //UPDATE_TAG:importModel
 
 (async () => {
@@ -29,6 +30,7 @@ async function initialDatabaseStructure() {
   await BookNote.sync({alter: true});
   await Team.sync({alter: true});
   await TeamUser.sync({alter: true});
+  await Objective.sync({alter: true});
 //UPDATE_TAG:asyncModel
 }
 
@@ -38,7 +40,10 @@ async function initialMenu() {
     {name: '藏书阁', icon: 'file', path: '/admin/bookMark', enable: true, parentPath: '', type: 1},
     {name: '心得', icon: 'file', path: '/admin/bookNote', enable: true, parentPath: '',type:1},
     {name: '团队', icon: 'file', path: '/admin/team', enable: true, parentPath: '',type:1},
-  //UPDATE_TAG:asyncMenu
+  
+    {name: 'objective', icon: 'file', path: '/admin/objective', enable: true, parentPath: '',type:1},
+  
+//UPDATE_TAG:asyncMenu
   ];
   await Menu.bulkCreate(menuList, {updateOnDuplicate: ['path', 'name', 'icon', 'enable', 'parentPath', 'type']});
 }

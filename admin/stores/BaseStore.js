@@ -142,11 +142,11 @@ export default class BaseStore {
   }
 
   async add(data) {
-    return await ajax({url: this.addApi, data});
+    return  ajax({url: this.addApi, data});
   }
 
   async update(data) {
-    return await ajax({url: this.updateApi, data});
+    return  ajax({url: this.updateApi, data});
   }
 
   @action

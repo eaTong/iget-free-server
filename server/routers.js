@@ -13,6 +13,7 @@ const bookApi = require('./apis/bookApi');
 const bookMarkApi = require('./apis/bookMarkApi');
 const bookNoteApi = require('./apis/bookNoteApi');
 const teamApi = require('./apis/teamApi');
+const objectiveApi = require('./apis/objectiveApi');
 //UPDATE_TAG:importApi
 
 const router = new Router();
@@ -27,6 +28,7 @@ router.post('/api/user/login', insertLog('login', data => ({
 router.post('/api/pub/quickLogin', insertLog('login'), userApi.quickLogin);
 router.post('/api/pub/logout', userApi.logout);
 router.post('/api/image/upload', fileApi.uploadImage);
+router.post('/api/image/upload/base64', fileApi.uploadImageByBase64);
 router.post('/api/file/upload', fileApi.uploadFile);
 router.post('/api/menu/get', menuApi.getMenus);
 router.post('/api/menu/authorised', menuApi.getAuthorisedMenu);
@@ -67,6 +69,12 @@ router.post('/api/team/join', insertLog('join'), checkArguments(['teamId']), tea
 router.post('/api/team/quit', insertLog('quit'), checkArguments(['teamId']), teamApi.quitTeam);
 router.post('/api/team/deleteMember', insertLog('deleteMember'), checkArguments(['teamId']), teamApi.deleteTeamMember);
 router.post('/api/team/detail', checkArguments(['id']), teamApi.getTeamDetail);
+
+router.post('/api/objective/add', insertLog('add'), checkArguments(['name']), objectiveApi.addObjective);
+router.post('/api/objective/get', objectiveApi.getObjectives);
+router.post('/api/objective/update', insertLog('update'), checkArguments(['id', 'name']), objectiveApi.updateObjectives);
+router.post('/api/objective/delete', insertLog('delete'), checkArguments(['ids']), objectiveApi.deleteObjectives);
+router.post('/api/objective/detail',  checkArguments(['id']), objectiveApi.getObjectiveDetail);
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {

@@ -14,7 +14,7 @@ const Team = sequelize.define('team', {
     allowNull: false,
     primaryKey: true,
     type: Sequelize.UUID,
-    defaultValue: uuid()
+    defaultValue: ()=>uuid()
   },
   creator: {type: Sequelize.INTEGER, comments: '创建人ID'},
   name: {type: Sequelize.STRING, comments: '团队名称'},
