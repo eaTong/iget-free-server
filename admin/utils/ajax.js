@@ -23,7 +23,7 @@ export default function ajax(config) {
         throw new LogicalError(result);
       }
       store.app.ajaxEnd(url);
-      resolve(JSON.parse(JSON.stringify(result.data.data).replace(/:null/g, ':""')));
+      resolve(JSON.parse(JSON.stringify(result.data.data || {}).replace(/:null/g, ':""')));
     }).catch(ex => {
       hideLoading();
       if (ex instanceof LogicalError) {

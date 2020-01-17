@@ -11,10 +11,17 @@ import ObjectiveFormModal from "./ObjectiveFormModal";
 import {inject, observer} from "mobx-react";
 import Title from "~/components/Title";
 import PageBase from "~/components/PageBase";
+import moment from "moment";
 
 const ButtonGroup = Button.Group;
 const columns = [
   {title: '名称', key: 'name'},
+  {title: '备注', key: 'description'},
+  {title: '达成奖励', key: 'reward'},
+  {title: '奖励已发放', key: 'rewarded'},
+  {title: '计划开始日期', key: 'planStartDate'},
+  {title: '计划结束日期', key: 'planEndDate'},
+  {title: '创建日期', key: 'createdAt',render:val=>moment(val).format('YYYY-MM-DD HH:mm:SS')},
 ];
 
 @inject('objective','app') @observer
@@ -28,7 +35,7 @@ class ObjectivePage extends PageBase {
     const {dataList, operateType, showFormModal, selectedKeys, rowSelection, firstSelected , pagination} = objective;
     return (
       <div className="base-layout objective-page">
-        <Title title='objective管理'/>
+        <Title title='OKR'/>
         <div className="operate-bar">
           <Input.Search
             className={'search'}
@@ -82,4 +89,3 @@ class ObjectivePage extends PageBase {
 
 ObjectivePage.propTypes = {};
 export default ObjectivePage;
-  

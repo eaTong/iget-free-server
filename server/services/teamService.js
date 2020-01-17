@@ -65,7 +65,7 @@ module.exports = {
 
     const option = {
       where: {enable: true, name: {[Op.like]: `%${keywords}%`}},
-      attributes: ['id', 'name', 'description', 'creator', 'needPassword'],
+      attributes: ['id', 'name', 'description', 'creator', 'needPassword','createdAt'],
       include: [
         {model: User, where: {id: loginUser.id}, attributes: ['id', 'name', 'account']},
       ]
@@ -83,7 +83,11 @@ module.exports = {
       attributes: [[sequelize.fn('COUNT', '*'), 'total']],
       group: Team.id
     });
-    const list = await Team.findAll({offset: pageIndex * pageSize, limit: pageSize, ...option});
+    const list = await Team.findAll({
+      offset: pageIndex * pageSize,
+      limit: pageSize, ...option,
+      order: [['name', 'desc']]
+    });
 
     return {
       total: totalValue ? totalValue.dataValues.total : 0,
@@ -101,12 +105,22 @@ module.exports = {
   getTeamDetail: async ({id}, loginUser) => {
     const teamDetail = await Team.findOne({
       where: {id},
-      attributes: ['id', 'name', 'description', 'creator', 'needPassword','creator'],
+      attributes: ['id', 'name', 'description', 'creator', 'needPassword', 'creator'],
       include: [
         {model: User, attributes: ['id', 'name', 'account']},
       ]
     });
     const team = JSON.parse(JSON.stringify(teamDetail));
     return {...team, creator: team.users.find(user => user.id === team.creator)}
+  },
+  getTeamsWithUser: async (loginUser) => {
+    const teamIds = await TeamUser.findAll({attributes: ['teamId'], where: {userId: loginUser.id}});
+    return Team.findAll({
+      where: {enable: true, id: {[Op.in]: teamIds.map(team => team.dataValues.teamId)}},
+      attributes: ['id', 'name', 'description', 'creator', 'needPassword'],
+      include: [
+        {model: User, attributes: ['id', 'name', 'account']},
+      ]
+    });
   }
 };

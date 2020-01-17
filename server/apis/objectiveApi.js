@@ -27,6 +27,9 @@ module.exports = {
   getObjectiveDetail: async (ctx) => {
     const loginUser = ctx.session.loginUser;
     return objectiveService.getObjectiveDetail(ctx.request.body,loginUser);
+  },
+  addRecord: async (ctx) => {
+    const loginUser = ctx.session.loginUser;
+    return objectiveService.addRecord(ctx.request.body,loginUser);
   }
 };
-  

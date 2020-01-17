@@ -69,12 +69,14 @@ router.post('/api/team/join', insertLog('join'), checkArguments(['teamId']), tea
 router.post('/api/team/quit', insertLog('quit'), checkArguments(['teamId']), teamApi.quitTeam);
 router.post('/api/team/deleteMember', insertLog('deleteMember'), checkArguments(['teamId']), teamApi.deleteTeamMember);
 router.post('/api/team/detail', checkArguments(['id']), teamApi.getTeamDetail);
+router.post('/api/team/get/withUser', teamApi.getTeamsWithUser);
 
 router.post('/api/objective/add', insertLog('add'), checkArguments(['name']), objectiveApi.addObjective);
 router.post('/api/objective/get', objectiveApi.getObjectives);
 router.post('/api/objective/update', insertLog('update'), checkArguments(['id', 'name']), objectiveApi.updateObjectives);
 router.post('/api/objective/delete', insertLog('delete'), checkArguments(['ids']), objectiveApi.deleteObjectives);
-router.post('/api/objective/detail',  checkArguments(['id']), objectiveApi.getObjectiveDetail);
+router.post('/api/objective/detail', checkArguments(['id']), objectiveApi.getObjectiveDetail);
+router.post('/api/objective/record', checkArguments(['objectiveId']), objectiveApi.addRecord);
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {

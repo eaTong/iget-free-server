@@ -8,8 +8,7 @@ module.exports = {
     return menuService.getMenus();
   },
   getAuthorisedMenu: async (ctx) => {
-    return
-      menuService.getAuthorisedMenu(ctx.session.loginUser.id);
+    return menuService.getAuthorisedMenu(ctx.session.loginUser.id);
   }
 };
 
