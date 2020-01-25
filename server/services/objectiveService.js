@@ -63,7 +63,7 @@ module.exports = {
       ],
       order: [['createdAt', 'DESC']],
       offset: pageIndex * pageSize,
-      limit: pageSize,
+      limit: parseInt(pageSize),
       ...option
     });
     return {total, list}

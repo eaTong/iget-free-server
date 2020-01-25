@@ -19,6 +19,7 @@ const Objective = sequelize.define('objective', {
   name: {type: Sequelize.STRING},
   description: {type: Sequelize.STRING, comment: '描述'},
   code: {type: Sequelize.STRING, comment: '任务编号'},
+  calendarId: {type: Sequelize.STRING, comment: '保存到手机唯一ID'},
   planEndDate: {type: Sequelize.DATEONLY, comment: '计划结束日期'},
   planStartDate: {type: Sequelize.DATEONLY, comment: '计划开始日期'},
   responsibleTeamId: {type: Sequelize.STRING, comment: '负责团队'},
@@ -28,7 +29,7 @@ const Objective = sequelize.define('objective', {
   rewarded: {type: Sequelize.BOOLEAN, comment: '奖励是否发放'},
   responsibleUserId: {type: Sequelize.INTEGER, comment: '负责人'},
   publishUserId: {type: Sequelize.INTEGER, comment: '发布人'},
-  parentObjectiveId: {type: Sequelize.STRING, comment: '上级计划ID'},
+  parentObjectiveId: {type: Sequelize.UUID, comment: '上级计划ID'},
   progress: {type: Sequelize.INTEGER, comment: '完成进度', defaultValue: 0},
   enable: Sequelize.BOOLEAN,
 });

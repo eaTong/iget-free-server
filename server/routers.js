@@ -73,7 +73,7 @@ router.post('/api/team/get/withUser', teamApi.getTeamsWithUser);
 
 router.post('/api/objective/add', insertLog('add'), checkArguments(['name']), objectiveApi.addObjective);
 router.post('/api/objective/get', objectiveApi.getObjectives);
-router.post('/api/objective/update', insertLog('update'), checkArguments(['id', 'name']), objectiveApi.updateObjectives);
+router.post('/api/objective/update', insertLog('update'), checkArguments(['id']), objectiveApi.updateObjectives);
 router.post('/api/objective/delete', insertLog('delete'), checkArguments(['ids']), objectiveApi.deleteObjectives);
 router.post('/api/objective/detail', checkArguments(['id']), objectiveApi.getObjectiveDetail);
 router.post('/api/objective/record', checkArguments(['objectiveId']), objectiveApi.addRecord);

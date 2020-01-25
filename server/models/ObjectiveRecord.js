@@ -7,7 +7,7 @@ const Objective = require('./Objective');
 const ObjectiveRecord = sequelize.define('objectiveRecord', {
   title: {type: Sequelize.STRING, comments: '记录标题'},
   operatorUserId: {type: Sequelize.INTEGER, comments: '操作人'},
-  objectiveId: {type: Sequelize.STRING, comments: '关联计划ID'},
+  objectiveId: {type: Sequelize.UUID, comments: '关联计划ID'},
   content: {type: Sequelize.STRING, length: 5000, comments: '记录正文'},
   images: {type: Sequelize.JSON, comments: '记录图片'}
 });

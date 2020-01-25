@@ -51,7 +51,12 @@ module.exports = {
       attributes: ['id', 'name', 'account', 'uuid'],
       where: {account, enable: true, password: md5(password).toString()}
     });
-    return {...user.dataValues, hasPassword: true}
+    if(user){
+
+      return {...user.dataValues, hasPassword: true}
+    }else{
+      throw new LogicError('用户名或密码错误')
+    }
   },
   quickLogin: async ({uuid}) => {
     const user = await User.findOne({
