@@ -6,6 +6,7 @@ import BookNotePage from './pages/bookNote/BookNotePage';
 import BookDetail from "./pages/book/BookDetail";
 import TeamPage from './pages/team/TeamPage';
 import ObjectivePage from './pages/objective/ObjectivePage';
+import FeedbackPage from './pages/feedback/FeedbackPage';
 //UPDATE_TAG:importPage
 
 const componentsMapping = {
@@ -17,6 +18,7 @@ const componentsMapping = {
   '/admin/bookDetail': BookDetail,
    '/admin/team': TeamPage,
    '/admin/objective': ObjectivePage,
+   '/admin/feedback': FeedbackPage,
 //UPDATE_TAG:addPageRoute
 };
 

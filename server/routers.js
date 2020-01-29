@@ -14,6 +14,7 @@ const bookMarkApi = require('./apis/bookMarkApi');
 const bookNoteApi = require('./apis/bookNoteApi');
 const teamApi = require('./apis/teamApi');
 const objectiveApi = require('./apis/objectiveApi');
+const feedbackApi = require('./apis/feedbackApi');
 //UPDATE_TAG:importApi
 
 const router = new Router();
@@ -77,6 +78,12 @@ router.post('/api/objective/update', insertLog('update'), checkArguments(['id'])
 router.post('/api/objective/delete', insertLog('delete'), checkArguments(['ids']), objectiveApi.deleteObjectives);
 router.post('/api/objective/detail', checkArguments(['id']), objectiveApi.getObjectiveDetail);
 router.post('/api/objective/record', checkArguments(['objectiveId']), objectiveApi.addRecord);
+
+router.post('/api/feedback/add', insertLog('add'), checkArguments(['name']), feedbackApi.addFeedback);
+router.post('/api/feedback/get', feedbackApi.getFeedbacks);
+router.post('/api/feedback/update', insertLog('update'), checkArguments(['id', 'name']), feedbackApi.updateFeedbacks);
+router.post('/api/feedback/delete', insertLog('delete'), checkArguments(['ids']), feedbackApi.deleteFeedbacks);
+router.post('/api/feedback/detail',  checkArguments(['id']), feedbackApi.getFeedbackDetail); 
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {

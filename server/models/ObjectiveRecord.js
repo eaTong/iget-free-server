@@ -9,7 +9,9 @@ const ObjectiveRecord = sequelize.define('objectiveRecord', {
   operatorUserId: {type: Sequelize.INTEGER, comments: '操作人'},
   objectiveId: {type: Sequelize.UUID, comments: '关联计划ID'},
   content: {type: Sequelize.STRING, length: 5000, comments: '记录正文'},
-  images: {type: Sequelize.JSON, comments: '记录图片'}
+  images: {type: Sequelize.JSON, comments: '记录图片'},
+  originProgress: {type: Sequelize.INTEGER, comments: '原始进度'},
+  currentProgress: {type: Sequelize.INTEGER, comments: '当前进度'}
 });
 
 ObjectiveRecord.belongsTo(User, {foreignKey: 'operatorUserId', as: 'operator'});

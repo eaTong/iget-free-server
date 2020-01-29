@@ -13,6 +13,7 @@ const TeamUser = require('../server/models/TeamUser');
 const Code = require('../server/models/Code');
 const Objective = require('../server/models/Objective');
 const ObjectiveRecord = require('../server/models/ObjectiveRecord');
+const Feedback = require('../server/models/Feedback');
 //UPDATE_TAG:importModel
 
 (async () => {
@@ -35,6 +36,7 @@ async function initialDatabaseStructure() {
   await Code.sync({alter: true});
   await Objective.sync({alter: true});
   await ObjectiveRecord.sync({alter: true});
+  await Feedback.sync({alter: true});
 //UPDATE_TAG:asyncModel
 }
 
@@ -45,6 +47,9 @@ async function initialMenu() {
     {name: '心得', icon: 'file', path: '/admin/bookNote', enable: true, parentPath: '',type:1},
     {name: '团队', icon: 'file', path: '/admin/team', enable: true, parentPath: '',type:1},
     {name: 'OKR', icon: 'file', path: '/admin/objective', enable: true, parentPath: '',type:1},
+
+    {name: 'feedback', icon: 'file', path: '/admin/feedback', enable: true, parentPath: '',type:1},
+  
 //UPDATE_TAG:asyncMenu
   ];
   await Menu.bulkCreate(menuList, {updateOnDuplicate: ['path', 'name', 'icon', 'enable', 'parentPath', 'type']});

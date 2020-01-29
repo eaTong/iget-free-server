@@ -71,6 +71,21 @@ module.exports = {
 
   addRecord: async (record, loginUser) => {
     record.operatorUserId = loginUser.id;
+
+    const objective = await Objective.findOne({where:{id:record.objectiveId}});
+    if(!objective){
+      throw new LogicError('找不到相应的计划！');
+    }
+    if(record.hasOwnProperty('progress')){
+
+      console.log(objective.dataValues.progress);
+      if(objective.dataValues.progress !== record.progress){
+        record.originProgress = objective.dataValues.progress;
+        record.currentProgress = record.progress;
+        objective.progress = record.progress;
+        await objective.save();
+      }
+    }
     return ObjectiveRecord.create(record);
   },
 
@@ -96,7 +111,8 @@ module.exports = {
         include: [
           {model: User, as: 'operator', attributes: ['name', 'id']},
           {model: Objective, as: 'objective', attributes: ['name', 'id']}
-        ]
+        ],
+        order:[['createdAt','desc']]
       });
       return {...objective.dataValues, records, childrenObjectives}
     } else {

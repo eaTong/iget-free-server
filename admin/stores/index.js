@@ -9,6 +9,7 @@ import BookMarkStore from './BookMarkStore';
 import BookNoteStore from './BookNoteStore';
 import TeamStore from './TeamStore';
 import ObjectiveStore from './ObjectiveStore';
+import FeedbackStore from './FeedbackStore';
 //UPDATE_TAG:importStore
 
 export default {
@@ -19,5 +20,6 @@ bookMark: new BookMarkStore(),
 bookNote: new BookNoteStore(),
 team: new TeamStore(),
 objective: new ObjectiveStore(),
+feedback: new FeedbackStore(),
 //UPDATE_TAG:registerStore
 }

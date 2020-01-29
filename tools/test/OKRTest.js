@@ -10,5 +10,10 @@ const {addObjective, addRecord} = require("../../server/services/ObjectiveServic
   //     description: "外部用户组",
   //   }, {id: 1});
   // }
-  addRecord({objectiveId: '75ac9512-283a-4cef-94b4-78f6d66acdb3', title: '标题', content: '今天做了什么什么什么蛇么'}, {id: 1})
+  addRecord({
+    objectiveId: '75ac9512-283a-4cef-94b4-78f6d66acdb3',
+    title: '标题',
+    content: '今天做了什么什么什么蛇么',
+    progress: 23
+  }, {id: 1})
 })();
