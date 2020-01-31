@@ -5,10 +5,10 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../framework/database');
 
-const User = sequelize.define('code', {
+const Code = sequelize.define('code', {
   max: Sequelize.INTEGER,
   type: Sequelize.STRING,
 });
 
 
-module.exports = User;
+module.exports = Code;

@@ -30,6 +30,7 @@ router.post('/api/pub/quickLogin', insertLog('login'), userApi.quickLogin);
 router.post('/api/pub/logout', userApi.logout);
 router.post('/api/image/upload', fileApi.uploadImage);
 router.post('/api/image/upload/base64', fileApi.uploadImageByBase64);
+router.post('/api/pub/image/upload', fileApi.uploadImage);
 router.post('/api/file/upload', fileApi.uploadFile);
 router.post('/api/menu/get', menuApi.getMenus);
 router.post('/api/menu/authorised', menuApi.getAuthorisedMenu);
@@ -83,7 +84,7 @@ router.post('/api/feedback/add', insertLog('add'), checkArguments(['name']), fee
 router.post('/api/feedback/get', feedbackApi.getFeedbacks);
 router.post('/api/feedback/update', insertLog('update'), checkArguments(['id', 'name']), feedbackApi.updateFeedbacks);
 router.post('/api/feedback/delete', insertLog('delete'), checkArguments(['ids']), feedbackApi.deleteFeedbacks);
-router.post('/api/feedback/detail',  checkArguments(['id']), feedbackApi.getFeedbackDetail); 
+router.post('/api/feedback/detail',  checkArguments(['id']), feedbackApi.getFeedbackDetail);
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {
