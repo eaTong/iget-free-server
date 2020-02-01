@@ -10,6 +10,7 @@ import BookNoteStore from './BookNoteStore';
 import TeamStore from './TeamStore';
 import ObjectiveStore from './ObjectiveStore';
 import FeedbackStore from './FeedbackStore';
+import ContactStore from './ContactStore';
 //UPDATE_TAG:importStore
 
 export default {
@@ -21,5 +22,6 @@ bookNote: new BookNoteStore(),
 team: new TeamStore(),
 objective: new ObjectiveStore(),
 feedback: new FeedbackStore(),
+contact: new ContactStore(),
 //UPDATE_TAG:registerStore
 }

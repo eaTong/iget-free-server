@@ -14,6 +14,7 @@ const Code = require('../server/models/Code');
 const Objective = require('../server/models/Objective');
 const ObjectiveRecord = require('../server/models/ObjectiveRecord');
 const Feedback = require('../server/models/Feedback');
+const Contact = require('../server/models/Contact');
 //UPDATE_TAG:importModel
 
 (async () => {
@@ -37,6 +38,7 @@ async function initialDatabaseStructure() {
   await Objective.sync({alter: true});
   await ObjectiveRecord.sync({alter: true});
   await Feedback.sync({alter: true});
+  await Contact.sync({alter: true});
 //UPDATE_TAG:asyncModel
 }
 
@@ -49,6 +51,9 @@ async function initialMenu() {
     {name: 'OKR', icon: 'file', path: '/admin/objective', enable: true, parentPath: '',type:1},
 
     {name: 'feedback', icon: 'file', path: '/admin/feedback', enable: true, parentPath: '',type:1},
+  
+
+    {name: 'contact', icon: 'file', path: '/admin/contact', enable: true, parentPath: '',type:1},
   
 //UPDATE_TAG:asyncMenu
   ];

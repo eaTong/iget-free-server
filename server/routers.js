@@ -15,6 +15,7 @@ const bookNoteApi = require('./apis/bookNoteApi');
 const teamApi = require('./apis/teamApi');
 const objectiveApi = require('./apis/objectiveApi');
 const feedbackApi = require('./apis/feedbackApi');
+const contactApi = require('./apis/contactApi');
 //UPDATE_TAG:importApi
 
 const router = new Router();
@@ -85,6 +86,12 @@ router.post('/api/feedback/get', feedbackApi.getFeedbacks);
 router.post('/api/feedback/update', insertLog('update'), checkArguments(['id', 'name']), feedbackApi.updateFeedbacks);
 router.post('/api/feedback/delete', insertLog('delete'), checkArguments(['ids']), feedbackApi.deleteFeedbacks);
 router.post('/api/feedback/detail',  checkArguments(['id']), feedbackApi.getFeedbackDetail);
+
+router.post('/api/contact/add', insertLog('add'), checkArguments(['name']), contactApi.addContact);
+router.post('/api/contact/get', contactApi.getContacts);
+router.post('/api/contact/update', insertLog('update'), checkArguments(['id', 'name']), contactApi.updateContacts);
+router.post('/api/contact/delete', insertLog('delete'), checkArguments(['ids']), contactApi.deleteContacts);
+router.post('/api/contact/detail',  checkArguments(['id']), contactApi.getContactDetail); 
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {
