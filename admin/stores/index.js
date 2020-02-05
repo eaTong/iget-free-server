@@ -11,6 +11,7 @@ import TeamStore from './TeamStore';
 import ObjectiveStore from './ObjectiveStore';
 import FeedbackStore from './FeedbackStore';
 import ContactStore from './ContactStore';
+import TagStore from './TagStore';
 //UPDATE_TAG:importStore
 
 export default {
@@ -23,5 +24,6 @@ team: new TeamStore(),
 objective: new ObjectiveStore(),
 feedback: new FeedbackStore(),
 contact: new ContactStore(),
+tag: new TagStore(),
 //UPDATE_TAG:registerStore
 }
