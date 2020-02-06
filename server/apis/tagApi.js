@@ -24,9 +24,15 @@ module.exports = {
     const loginUser = ctx.session.loginUser;
     return tagService.getTags(ctx.request.body,loginUser);
   },
+  getMyTags: async (ctx) => {
+    const loginUser = ctx.session.loginUser;
+    return tagService.getMyTags(ctx.request.body,loginUser);
+  },
+  getTagsByIds: async (ctx) => {
+    return tagService.getTagsByIds(ctx.request.body);
+  },
   getTagDetail: async (ctx) => {
     const loginUser = ctx.session.loginUser;
     return tagService.getTagDetail(ctx.request.body,loginUser);
   }
 };
-  

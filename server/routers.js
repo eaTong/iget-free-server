@@ -90,15 +90,17 @@ router.post('/api/feedback/detail',  checkArguments(['id']), feedbackApi.getFeed
 
 router.post('/api/contact/add', insertLog('add'), checkArguments(['name']), contactApi.addContact);
 router.post('/api/contact/get', contactApi.getContacts);
-router.post('/api/contact/update', insertLog('update'), checkArguments(['id', 'name']), contactApi.updateContacts);
+router.post('/api/contact/update', insertLog('update'), checkArguments(['id']), contactApi.updateContacts);
 router.post('/api/contact/delete', insertLog('delete'), checkArguments(['ids']), contactApi.deleteContacts);
-router.post('/api/contact/detail',  checkArguments(['id']), contactApi.getContactDetail); 
+router.post('/api/contact/detail',  checkArguments(['id']), contactApi.getContactDetail);
 
 router.post('/api/tag/add', insertLog('add'), checkArguments(['name']), tagApi.addTag);
 router.post('/api/tag/get', tagApi.getTags);
+router.post('/api/tag/get/mine', tagApi.getMyTags);
+router.post('/api/tag/get/ids', tagApi.getTagsByIds);
 router.post('/api/tag/update', insertLog('update'), checkArguments(['id', 'name']), tagApi.updateTags);
 router.post('/api/tag/delete', insertLog('delete'), checkArguments(['ids']), tagApi.deleteTags);
-router.post('/api/tag/detail',  checkArguments(['id']), tagApi.getTagDetail); 
+router.post('/api/tag/detail',  checkArguments(['id']), tagApi.getTagDetail);
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {
