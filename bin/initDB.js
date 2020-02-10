@@ -17,6 +17,7 @@ const Feedback = require('../server/models/Feedback');
 const Contact = require('../server/models/Contact');
 const Tag = require('../server/models/Tag');
 const ContactTag = require('../server/models/ContactTag');
+const ContactRecord = require('../server/models/ContactRecord');
 //UPDATE_TAG:importModel
 
 (async () => {
@@ -43,6 +44,7 @@ async function initialDatabaseStructure() {
   await Contact.sync({alter: true});
   await Contact.sync({alter: true});
   await Tag.sync({alter: true});
+  await ContactRecord.sync({alter: true});
   await ContactTag.sync({alter: true});
 //UPDATE_TAG:asyncModel
 }

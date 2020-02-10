@@ -7,6 +7,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../framework/database');
 const Tag = require('./Tag');
 const ContactTag = require('./ContactTag');
+const ContactRecord = require('./ContactRecord');
 
 const Contact = sequelize.define('contact', {
   name: {type: Sequelize.STRING},
@@ -22,7 +23,8 @@ const Contact = sequelize.define('contact', {
   enable: Sequelize.BOOLEAN,
 });
 
-
+Contact.hasMany(ContactRecord);
+ContactRecord.belongsTo(Contact);
 Contact.belongsToMany(Tag, {through: ContactTag});
 Tag.belongsToMany(Contact, {through: ContactTag});
 module.exports = Contact;

@@ -9,6 +9,7 @@ const {LogicError} = require('../framework/errors');
 const Contact = require('../models/Contact');
 const ContactTag = require('../models/ContactTag');
 const Tag = require('../models/Tag');
+const ContactRecord = require('../models/ContactRecord');
 
 module.exports = {
   addContact: async (contact, loginUser) => {
@@ -92,12 +93,18 @@ module.exports = {
     });
     const list = await Contact.findAll({
       offset: pageIndex * pageSize,
-      limit: pageSize, ...option,
+      limit: parseInt(pageSize),
+      ...option,
     });
     return {total, list}
   },
 
   getContactDetail: async ({id}, loginUser) => {
-    return Contact.findOne({where: {id, userId: loginUser.id}, include: [{model: Tag}]});
+    return Contact.findOne({where: {id, userId: loginUser.id}, include: [{model: Tag},{model:ContactRecord}]});
+  },
+
+  addRecord: async (record, loginUser) => {
+    record.userId = loginUser.id;
+    return ContactRecord.create(record);
   }
 };

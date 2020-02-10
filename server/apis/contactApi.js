@@ -27,6 +27,9 @@ module.exports = {
   getContactDetail: async (ctx) => {
     const loginUser = ctx.session.loginUser;
     return contactService.getContactDetail(ctx.request.body,loginUser);
+  },
+  addRecord: async (ctx) => {
+    const loginUser = ctx.session.loginUser;
+    return contactService.addRecord(ctx.request.body,loginUser);
   }
 };
-  

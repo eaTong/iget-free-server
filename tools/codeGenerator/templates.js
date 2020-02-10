@@ -80,7 +80,7 @@ module.exports = {
       ...option,
       attributes: [[sequelize.fn('COUNT', '*'), 'total']]
     });
-    const list = await ${upperFirstLetter(form)}.findAll({offset: pageIndex * pageSize, limit: pageSize, ...option});
+    const list = await ${upperFirstLetter(form)}.findAll({offset: pageIndex * pageSize, limit: parseInt(pageSize), ...option});
     return {total, list}
   },
 
