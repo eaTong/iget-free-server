@@ -9,6 +9,7 @@ import ObjectivePage from './pages/objective/ObjectivePage';
 import FeedbackPage from './pages/feedback/FeedbackPage';
 import ContactPage from './pages/contact/ContactPage';
 import TagPage from './pages/tag/TagPage';
+import RelationPage from './pages/relation/RelationPage';
 //UPDATE_TAG:importPage
 
 const componentsMapping = {
@@ -23,6 +24,7 @@ const componentsMapping = {
    '/admin/feedback': FeedbackPage,
    '/admin/contact': ContactPage,
    '/admin/tag': TagPage,
+   '/admin/relation': RelationPage,
 //UPDATE_TAG:addPageRoute
 };
 

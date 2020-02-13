@@ -17,6 +17,7 @@ const objectiveApi = require('./apis/objectiveApi');
 const feedbackApi = require('./apis/feedbackApi');
 const contactApi = require('./apis/contactApi');
 const tagApi = require('./apis/tagApi');
+const relationApi = require('./apis/relationApi');
 //UPDATE_TAG:importApi
 
 const router = new Router();
@@ -94,7 +95,6 @@ router.post('/api/contact/update', insertLog('update'), checkArguments(['id']), 
 router.post('/api/contact/delete', insertLog('delete'), checkArguments(['ids']), contactApi.deleteContacts);
 router.post('/api/contact/detail',  checkArguments(['id']), contactApi.getContactDetail);
 router.post('/api/contact/record', checkArguments(['contactId']), contactApi.addRecord);
-router.post('/api/relation/get',  contactApi.getRelations);
 
 router.post('/api/tag/add', insertLog('add'), checkArguments(['name']), tagApi.addTag);
 router.post('/api/tag/get', tagApi.getTags);
@@ -103,6 +103,12 @@ router.post('/api/tag/get/ids', tagApi.getTagsByIds);
 router.post('/api/tag/update', insertLog('update'), checkArguments(['id', 'name']), tagApi.updateTags);
 router.post('/api/tag/delete', insertLog('delete'), checkArguments(['ids']), tagApi.deleteTags);
 router.post('/api/tag/detail',  checkArguments(['id']), tagApi.getTagDetail);
+
+router.post('/api/relation/add', insertLog('add'), checkArguments(['name']), relationApi.addRelation);
+router.post('/api/relation/get', relationApi.getRelations);
+router.post('/api/relation/update', insertLog('update'), checkArguments(['id', 'name']), relationApi.updateRelations);
+router.post('/api/relation/delete', insertLog('delete'), checkArguments(['ids']), relationApi.deleteRelations);
+router.post('/api/relation/detail',  checkArguments(['id']), relationApi.getRelationDetail);
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {

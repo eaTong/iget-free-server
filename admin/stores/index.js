@@ -12,6 +12,7 @@ import ObjectiveStore from './ObjectiveStore';
 import FeedbackStore from './FeedbackStore';
 import ContactStore from './ContactStore';
 import TagStore from './TagStore';
+import RelationStore from './RelationStore';
 //UPDATE_TAG:importStore
 
 export default {
@@ -25,5 +26,6 @@ objective: new ObjectiveStore(),
 feedback: new FeedbackStore(),
 contact: new ContactStore(),
 tag: new TagStore(),
+relation: new RelationStore(),
 //UPDATE_TAG:registerStore
 }

@@ -1,6 +1,7 @@
+
 /**
- * Created by eaTong on 2020-02-05 .
- * Description: auto generated in  2020-02-05
+ * Created by eaTong on 2020-02-13 .
+ * Description: auto generated in  2020-02-13
  */
 
 const Sequelize = require('sequelize');
