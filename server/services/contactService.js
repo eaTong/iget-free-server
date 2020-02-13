@@ -11,6 +11,22 @@ const ContactTag = require('../models/ContactTag');
 const Tag = require('../models/Tag');
 const ContactRecord = require('../models/ContactRecord');
 
+async function resolveTags(tags) {
+  const tempTags = tags.filter(tag => /^temp~/.test(tag)).map(tag => tag.replace(/^temp~/, ''));
+  const savedTags = await Tag.findAll({where: {enable: true, name: {[Op.in]: tempTags}}});
+  const unsavedTags = tempTags.filter(tag => !savedTags.find(savedTag => savedTag.dataValues.name === tag)).map(tag => {
+    const tagPinyin = pinyin(tag, {style: pinyin.STYLE_NORMAL});
+    return {
+      name: tag,
+      enable: 1,
+      pinYin: tagPinyin.map(str => (str[0] || '')[0]).join(''),
+      fullPinYin: tagPinyin.map(str => (str[0] || '')).join('')
+    }
+  });
+  const result = await Tag.bulkCreate(unsavedTags);
+  return [...tags.filter(tag => !/^temp~/.test(tag)), ...[...result, ...savedTags].map(item => item.dataValues.id)];
+}
+
 module.exports = {
   addContact: async (contact, loginUser) => {
     contact.enable = true;
@@ -20,24 +36,12 @@ module.exports = {
     contact.fullPinYin = namePinYin.map(str => (str[0] || '')).join('');
     const savedContract = await Contact.create(contact);
     if (contact.tags) {
-      const tempTags = contact.tags.filter(tag => /^temp~/.test(tag)).map(tag => tag.replace(/^temp~/, ''));
-      const savedTags = await Tag.findAll({where: {enable: true, name: {[Op.in]: tempTags}}});
-      const unsavedTags = tempTags.filter(tag => !savedTags.find(savedTag => savedTag.dataValues.name === tag)).map(tag => {
-        const tagPinyin = pinyin(tag, {style: pinyin.STYLE_NORMAL});
-        return {
-          name: tag,
-          enable: 1,
-          pinYin: tagPinyin.map(str => (str[0] || '')[0]).join(''),
-          fullPinYin: tagPinyin.map(str => (str[0] || '')).join('')
-        }
-      });
-      const result = await Tag.bulkCreate(unsavedTags);
-      const finalTags = [...contact.tags.filter(tag => !/^temp~/.test(tag)), ...[...result, ...savedTags].map(item => item.dataValues.id)];
-      await savedContract.setTags(finalTags)
+      await savedContract.setTags(await resolveTags(contact.tags))
     }
     return savedContract;
 
   },
+
 
   updateContacts: async (contact, loginUser) => {
     const namePinYin = pinyin(contact.name, {style: pinyin.STYLE_NORMAL});
@@ -45,20 +49,7 @@ module.exports = {
     contact.fullPinYin = namePinYin.map(str => (str[0] || '')).join('');
     if (contact.tags) {
       const savedContract = await Contact.findOne({where: {id: contact.id}});
-      const tempTags = contact.tags.filter(tag => /^temp~/.test(tag)).map(tag => tag.replace(/^temp~/, ''));
-      const savedTags = await Tag.findAll({where: {enable: true, name: {[Op.in]: tempTags}}});
-      const unsavedTags = tempTags.filter(tag => !savedTags.find(savedTag => savedTag.dataValues.name === tag)).map(tag => {
-        const tagPinyin = pinyin(tag, {style: pinyin.STYLE_NORMAL});
-        return {
-          name: tag,
-          enable: 1,
-          pinYin: tagPinyin.map(str => (str[0] || '')[0]).join(''),
-          fullPinYin: tagPinyin.map(str => (str[0] || '')).join('')
-        }
-      });
-      const result = await Tag.bulkCreate(unsavedTags);
-      const finalTags = [...contact.tags.filter(tag => !/^temp~/.test(tag)), ...[...result, ...savedTags].map(item => item.dataValues.id)];
-      await savedContract.setTags(finalTags)
+      await savedContract.setTags(await resolveTags(contact.tags))
     }
     return Contact.update(contact, {where: {id: contact.id, userId: loginUser.id}})
   },
@@ -100,11 +91,15 @@ module.exports = {
   },
 
   getContactDetail: async ({id}, loginUser) => {
-    return Contact.findOne({where: {id, userId: loginUser.id}, include: [{model: Tag},{model:ContactRecord}]});
+    return Contact.findOne({where: {id, userId: loginUser.id}, include: [{model: Tag}, {model: ContactRecord}]});
   },
 
   addRecord: async (record, loginUser) => {
     record.userId = loginUser.id;
+    return ContactRecord.create(record);
+  },
+
+  getRelations: async (record, loginUser) => {
     return ContactRecord.create(record);
   }
 };

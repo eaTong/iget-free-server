@@ -8,6 +8,9 @@ const sequelize = require('../framework/database');
 const Tag = require('./Tag');
 const ContactTag = require('./ContactTag');
 const ContactRecord = require('./ContactRecord');
+const Relation = require('./Relation');
+const ContactRelation = require('./ContactRelation');
+const RelationContact = require('./RelationContact');
 
 const Contact = sequelize.define('contact', {
   name: {type: Sequelize.STRING},
@@ -17,7 +20,7 @@ const Contact = sequelize.define('contact', {
   gender: {type: Sequelize.INTEGER},
   description: {type: Sequelize.STRING},
   avatar: {type: Sequelize.STRING},
-  album:{type:Sequelize.JSON},
+  album: {type: Sequelize.JSON},
   birthday: {type: Sequelize.DATEONLY},
   userId: {type: Sequelize.INTEGER},
   enable: Sequelize.BOOLEAN,
@@ -27,4 +30,11 @@ Contact.hasMany(ContactRecord);
 ContactRecord.belongsTo(Contact);
 Contact.belongsToMany(Tag, {through: ContactTag});
 Tag.belongsToMany(Contact, {through: ContactTag});
+
+Contact.belongsToMany(Relation, {through: ContactRelation,});
+Relation.belongsToMany(Contact, {through: ContactRelation,});
+
+Contact.belongsToMany(Relation, {through: RelationContact,});
+Relation.belongsToMany(Contact, {through: RelationContact,});
+
 module.exports = Contact;
