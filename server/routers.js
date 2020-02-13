@@ -95,6 +95,7 @@ router.post('/api/contact/update', insertLog('update'), checkArguments(['id']), 
 router.post('/api/contact/delete', insertLog('delete'), checkArguments(['ids']), contactApi.deleteContacts);
 router.post('/api/contact/detail',  checkArguments(['id']), contactApi.getContactDetail);
 router.post('/api/contact/record', checkArguments(['contactId']), contactApi.addRecord);
+router.post('/api/contact/addRelation', checkArguments(['contactId']), contactApi.addRelation);
 
 router.post('/api/tag/add', insertLog('add'), checkArguments(['name']), tagApi.addTag);
 router.post('/api/tag/get', tagApi.getTags);

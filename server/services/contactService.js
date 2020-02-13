@@ -10,6 +10,9 @@ const Contact = require('../models/Contact');
 const ContactTag = require('../models/ContactTag');
 const Tag = require('../models/Tag');
 const ContactRecord = require('../models/ContactRecord');
+const Relation = require('../models/Relation');
+const RelationContact = require('../models/RelationContact');
+const ContactRelation = require('../models/ContactRelation');
 
 async function resolveTags(tags) {
   const tempTags = tags.filter(tag => /^temp~/.test(tag)).map(tag => tag.replace(/^temp~/, ''));
@@ -91,7 +94,12 @@ module.exports = {
   },
 
   getContactDetail: async ({id}, loginUser) => {
-    return Contact.findOne({where: {id, userId: loginUser.id}, include: [{model: Tag}, {model: ContactRecord}]});
+    return Contact.findOne({
+      where: {id, userId: loginUser.id},
+      include: [
+        {model: Tag}, {model: ContactRecord},
+        {model: Relation, through: ContactRelation , include:[{model:Contact , through:RelationContact}]}]
+    });
   },
 
   addRecord: async (record, loginUser) => {
@@ -99,7 +107,36 @@ module.exports = {
     return ContactRecord.create(record);
   },
 
-  getRelations: async (record, loginUser) => {
-    return ContactRecord.create(record);
+  addRelation: async (data, loginUser) => {
+    let relation;
+    if (/temp~/.test(data.relation)) {
+      const relationName = data.relation.replace(/temp~/, '');
+      const namePinYin = pinyin(relationName, {style: pinyin.STYLE_NORMAL});
+      relation = await Relation.findOne({where: {name: relationName}});
+      if (!relation) {
+        relation = await Relation.create({
+          name: relationName,
+          pinYin: namePinYin.map(str => (str[0] || '')[0]).join(''),
+          fullPinYin: namePinYin.map(str => (str[0] || '')).join('')
+        });
+      }
+
+    } else {
+      relation = await Relation.findOne({where: {id: data.relation}})
+    }
+    const contact = await Contact.findOne({where: {id: data.contactId}});
+    if (contact) {
+      const hasRelation = await contact.hasRelation(relation.dataValues.id);
+      if (!hasRelation) {
+        await contact.addRelation(relation.dataValues.id);
+      }
+    } else {
+      throw new LogicError('找不到指定联系人')
+    }
+    const relationHasContact = await relation.hasRelatedContact(parseInt(data.contact), {through: RelationContact});
+    if (!relationHasContact) {
+      await relation.addRelatedContact(data.contact, {through: RelationContact});
+    }
+    return relation;
   }
 };

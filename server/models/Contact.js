@@ -34,7 +34,7 @@ Tag.belongsToMany(Contact, {through: ContactTag});
 Contact.belongsToMany(Relation, {through: ContactRelation,});
 Relation.belongsToMany(Contact, {through: ContactRelation,});
 
-Contact.belongsToMany(Relation, {through: RelationContact,});
-Relation.belongsToMany(Contact, {through: RelationContact,});
+Contact.belongsToMany(Relation, {through: RelationContact,as:'relatedRelation'});
+Relation.belongsToMany(Contact, {through: RelationContact,as:'relatedContact'});
 
 module.exports = Contact;

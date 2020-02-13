@@ -32,6 +32,10 @@ module.exports = {
     const loginUser = ctx.session.loginUser;
     return contactService.addRecord(ctx.request.body,loginUser);
   },
+  addRelation: async (ctx) => {
+    const loginUser = ctx.session.loginUser;
+    return contactService.addRelation(ctx.request.body,loginUser);
+  },
   getRelations: async (ctx) => {
     const loginUser = ctx.session.loginUser;
     return contactService.getRelations(ctx.request.body);
