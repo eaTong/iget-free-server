@@ -8,9 +8,6 @@ const sequelize = require('../framework/database');
 const Tag = require('./Tag');
 const ContactTag = require('./ContactTag');
 const ContactRecord = require('./ContactRecord');
-const Relation = require('./Relation');
-const ContactRelation = require('./ContactRelation');
-const RelationContact = require('./RelationContact');
 
 const Contact = sequelize.define('contact', {
   name: {type: Sequelize.STRING},
@@ -31,10 +28,5 @@ ContactRecord.belongsTo(Contact);
 Contact.belongsToMany(Tag, {through: ContactTag});
 Tag.belongsToMany(Contact, {through: ContactTag});
 
-Contact.belongsToMany(Relation, {through: ContactRelation,});
-Relation.belongsToMany(Contact, {through: ContactRelation,});
-
-Contact.belongsToMany(Relation, {through: RelationContact,as:'relatedRelation'});
-Relation.belongsToMany(Contact, {through: RelationContact,as:'relatedContact'});
 
 module.exports = Contact;

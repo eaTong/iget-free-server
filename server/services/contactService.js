@@ -11,7 +11,6 @@ const ContactTag = require('../models/ContactTag');
 const Tag = require('../models/Tag');
 const ContactRecord = require('../models/ContactRecord');
 const Relation = require('../models/Relation');
-const RelationContact = require('../models/RelationContact');
 const ContactRelation = require('../models/ContactRelation');
 
 async function resolveTags(tags) {
@@ -61,7 +60,7 @@ module.exports = {
     return Contact.update({enable: false}, {where: {id: {[Op.in]: ids}, userId: loginUser.id}});
   },
 
-  getContacts: async ({pageIndex = 0, pageSize = 20, keywords = '', tagId}, loginUser) => {
+  getContacts: async ({pageIndex = 0, pageSize = 20, keywords = '', tagId, tagIds}, loginUser) => {
 
     const option = {
       include: [{model: Tag}],
@@ -81,6 +80,13 @@ module.exports = {
       });
       option.where.id = {[Op.in]: contractIds.map(item => item.contactId)};
     }
+    if (tagIds && tagIds.length > 0) {
+      const contractIds = await ContactTag.findAll({
+        attributes: ['contactId'],
+        where: {tagId: {[Op.in]: tagIds}}
+      });
+      option.where.id = {[Op.in]: contractIds.map(item => item.contactId)};
+    }
     const {dataValues: {total}} = await Contact.findOne({
       ...option,
       attributes: [[sequelize.fn('COUNT', '*'), 'total']]
@@ -94,12 +100,21 @@ module.exports = {
   },
 
   getContactDetail: async ({id}, loginUser) => {
-    return Contact.findOne({
+    const contact = await Contact.findOne({
       where: {id, userId: loginUser.id},
       include: [
         {model: Tag}, {model: ContactRecord},
-        {model: Relation, through: ContactRelation , include:[{model:Contact , through:RelationContact}]}]
+      ]
     });
+    const fromRelations = await ContactRelation.findAll({
+      where: {contactFromId: id},
+      include: [{model: Relation, as: 'relation'}, {model: Contact, as: 'contactTo'}]
+    });
+    const toRelations = await ContactRelation.findAll({
+      where: {contactToId: id},
+      include: [{model: Relation, as: 'relation'}, {model: Contact, as: 'contactFrom'}]
+    });
+    return {...contact.dataValues, fromRelations, toRelations};
   },
 
   addRecord: async (record, loginUser) => {
@@ -124,19 +139,7 @@ module.exports = {
     } else {
       relation = await Relation.findOne({where: {id: data.relation}})
     }
-    const contact = await Contact.findOne({where: {id: data.contactId}});
-    if (contact) {
-      const hasRelation = await contact.hasRelation(relation.dataValues.id);
-      if (!hasRelation) {
-        await contact.addRelation(relation.dataValues.id);
-      }
-    } else {
-      throw new LogicError('找不到指定联系人')
-    }
-    const relationHasContact = await relation.hasRelatedContact(parseInt(data.contact), {through: RelationContact});
-    if (!relationHasContact) {
-      await relation.addRelatedContact(data.contact, {through: RelationContact});
-    }
+    await ContactRelation.create({...data, relationId: relation.dataValues.id});
     return relation;
   }
 };

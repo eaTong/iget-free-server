@@ -20,7 +20,6 @@ const ContactTag = require('../server/models/ContactTag');
 const ContactRecord = require('../server/models/ContactRecord');
 const Relation = require('../server/models/Relation');
 const ContactRelation = require('../server/models/ContactRelation');
-const RelationContact = require('../server/models/RelationContact');
 //UPDATE_TAG:importModel
 
 (async () => {
@@ -50,7 +49,6 @@ async function initialDatabaseStructure() {
   await ContactRecord.sync({alter: true});
   await ContactTag.sync({alter: true});
   await ContactRelation.sync({alter: true});
-  await RelationContact.sync({alter: true});
 //UPDATE_TAG:asyncModel
 }
 

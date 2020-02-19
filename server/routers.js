@@ -87,15 +87,15 @@ router.post('/api/feedback/add', insertLog('add'), checkArguments(['name']), fee
 router.post('/api/feedback/get', feedbackApi.getFeedbacks);
 router.post('/api/feedback/update', insertLog('update'), checkArguments(['id', 'name']), feedbackApi.updateFeedbacks);
 router.post('/api/feedback/delete', insertLog('delete'), checkArguments(['ids']), feedbackApi.deleteFeedbacks);
-router.post('/api/feedback/detail',  checkArguments(['id']), feedbackApi.getFeedbackDetail);
+router.post('/api/feedback/detail', checkArguments(['id']), feedbackApi.getFeedbackDetail);
 
 router.post('/api/contact/add', insertLog('add'), checkArguments(['name']), contactApi.addContact);
 router.post('/api/contact/get', contactApi.getContacts);
 router.post('/api/contact/update', insertLog('update'), checkArguments(['id']), contactApi.updateContacts);
 router.post('/api/contact/delete', insertLog('delete'), checkArguments(['ids']), contactApi.deleteContacts);
-router.post('/api/contact/detail',  checkArguments(['id']), contactApi.getContactDetail);
+router.post('/api/contact/detail', checkArguments(['id']), contactApi.getContactDetail);
 router.post('/api/contact/record', checkArguments(['contactId']), contactApi.addRecord);
-router.post('/api/contact/addRelation', checkArguments(['contactId']), contactApi.addRelation);
+router.post('/api/contact/addRelation', checkArguments(['contactFromId', 'contactToId', 'relation']), contactApi.addRelation);
 
 router.post('/api/tag/add', insertLog('add'), checkArguments(['name']), tagApi.addTag);
 router.post('/api/tag/get', tagApi.getTags);
@@ -103,13 +103,13 @@ router.post('/api/tag/get/mine', tagApi.getMyTags);
 router.post('/api/tag/get/ids', tagApi.getTagsByIds);
 router.post('/api/tag/update', insertLog('update'), checkArguments(['id', 'name']), tagApi.updateTags);
 router.post('/api/tag/delete', insertLog('delete'), checkArguments(['ids']), tagApi.deleteTags);
-router.post('/api/tag/detail',  checkArguments(['id']), tagApi.getTagDetail);
+router.post('/api/tag/detail', checkArguments(['id']), tagApi.getTagDetail);
 
 router.post('/api/relation/add', insertLog('add'), checkArguments(['name']), relationApi.addRelation);
 router.post('/api/relation/get', relationApi.getRelations);
 router.post('/api/relation/update', insertLog('update'), checkArguments(['id', 'name']), relationApi.updateRelations);
 router.post('/api/relation/delete', insertLog('delete'), checkArguments(['ids']), relationApi.deleteRelations);
-router.post('/api/relation/detail',  checkArguments(['id']), relationApi.getRelationDetail);
+router.post('/api/relation/detail', checkArguments(['id']), relationApi.getRelationDetail);
 //UPDATE_TAG:defineRouter
 
 router.post('/api/*', async ctx => {
