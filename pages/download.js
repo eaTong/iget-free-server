@@ -14,15 +14,20 @@ class Download extends Component {
   }
 
   download() {
-    const iOSLink = 'https://apps.apple.com/cn/app/%E4%B9%A6%E9%A6%99-%E5%BE%97%E5%AF%B8%E8%BF%9B%E5%B0%BA/id1493162230?from=singlemessage';
-    const androidLink = 'https://iget.eatong.cn/app-release.apk';
 
-    function checkIsAndroid() {
-      const ua = navigator.userAgent.toLowerCase();
-      return /android/.test(ua);
+    var ua = navigator.userAgent.toLowerCase();
+    if (/MicroMessenger/i.test(ua)) {
+      const iOSLink = 'https://apps.apple.com/cn/app/%E4%B9%A6%E9%A6%99-%E5%BE%97%E5%AF%B8%E8%BF%9B%E5%B0%BA/id1493162230?from=singlemessage';
+      const androidLink = 'https://iget.eatong.cn/app-release.apk';
+
+      function checkIsAndroid() {
+        const ua = navigator.userAgent.toLowerCase();
+        return /android/.test(ua);
+      }
+      window.open(checkIsAndroid() ? androidLink : iOSLink);
     }
 
-    window.open(checkIsAndroid() ? androidLink : iOSLink);
+
   }
 
   render() {

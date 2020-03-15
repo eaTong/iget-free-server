@@ -3,6 +3,7 @@
  * Description: auto generated in  2020-02-01
  */
 
+const uuid = require('uuid/v4');
 const Sequelize = require('sequelize');
 const sequelize = require('../framework/database');
 const Tag = require('./Tag');
@@ -19,8 +20,10 @@ const Contact = sequelize.define('contact', {
   avatar: {type: Sequelize.STRING},
   album: {type: Sequelize.JSON},
   birthday: {type: Sequelize.DATEONLY},
+  lastContactDate: {type: Sequelize.DATEONLY},
   userId: {type: Sequelize.INTEGER},
   enable: Sequelize.BOOLEAN,
+  contactUniqueKey:{type:Sequelize.STRING, defaultValue: ()=>uuid(),unique:true}
 });
 
 Contact.hasMany(ContactRecord);

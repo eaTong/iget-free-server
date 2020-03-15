@@ -61,7 +61,6 @@ module.exports = {
   },
 
   getContacts: async ({pageIndex = 0, pageSize = 20, keywords = '', tagId, tagIds}, loginUser) => {
-
     const option = {
       include: [{model: Tag}],
       where: {
@@ -81,11 +80,16 @@ module.exports = {
       option.where.id = {[Op.in]: contractIds.map(item => item.contactId)};
     }
     if (tagIds && tagIds.length > 0) {
-      const contractIds = await ContactTag.findAll({
-        attributes: ['contactId'],
-        where: {tagId: {[Op.in]: tagIds}}
+      const contactIds = await ContactTag.findAll({
+        raw: true,
+        attributes: [[sequelize.fn('COUNT', 'tagId'), 'total'], 'contactId'],
+        group: 'contactId',
+        where: {tagId: {[Op.in]: tagIds}},
+        having: {total: {[Op.gte]: tagIds.length}}
+        // having:['count(?)>=?','contactId',tagIds.length]
       });
-      option.where.id = {[Op.in]: contractIds.map(item => item.contactId)};
+
+      option.where.id = {[Op.in]: contactIds.map(item => item.contactId)};
     }
     const {dataValues: {total}} = await Contact.findOne({
       ...option,
@@ -97,6 +101,20 @@ module.exports = {
       ...option,
     });
     return {total, list}
+  },
+
+  importContacts: async (contacts, loginUser) => {
+    const formattedContacts = contacts.map(contact => {
+      const namePinYin = pinyin(contact.name, {style: pinyin.STYLE_NORMAL});
+      return {
+        ...contact,
+        pinYin: namePinYin.map(str => (str[0] || '')[0]).join(''),
+        fullPinYin: namePinYin.map(str => (str[0] || '')).join(''),
+        userId: loginUser.id,
+        enable: true,
+      };
+    });
+    return Contact.bulkCreate(formattedContacts, {updateOnDuplicate: ['name', 'phone', 'birthday', 'pinYin', 'fullPinYin']});
   },
 
   getContactDetail: async ({id}, loginUser) => {
@@ -119,6 +137,7 @@ module.exports = {
 
   addRecord: async (record, loginUser) => {
     record.userId = loginUser.id;
+    await Contact.update({lastContactDate: new Date()}, {where:{id: record.contactId}});
     return ContactRecord.create(record);
   },
 
